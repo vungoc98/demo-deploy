@@ -29,41 +29,22 @@ export class LoginComponent implements OnInit {
   }
 
   async onSubmit() { 
-    // // tao duong dan can post len
-    // const url = "http://localhost:3000/login";
+    // tao duong dan can post len
+    const url = "http://localhost:3000/login";
 
-    // // tao header
-    // const headers = new Headers({ 'Content-Type': 'application/json' });
+    // tao header
+    const headers = new Headers({ 'Content-Type': 'application/json' });
 
-    // // lay body gui len
-    // const body = JSON.stringify(this.formSignIn.value);
+    // lay body gui len
+    const body = JSON.stringify(this.formSignIn.value);
 
-    // // res la ket qua tra ve tu server
-    // await this.http.post(url, body, {headers: headers})
-    // .toPromise()
-    // .then(res => res.json())
-    // .then(resJson => {
-    //   this.thongTinTaiKhoan = resJson;
-    //   if (this.thongTinTaiKhoan.check == 0) {
-    //     alert("Tài khoản hoặc mật khẩu không đúng");
-    //   }
-       
-    //   else{ 
-    //      this.info = new Login(resJson.check, resJson.username, resJson.password, resJson.name, resJson.address, resJson.email, resJson.mobile, resJson.count_type);
-    //      this.acountInfo.setInfomation(this.info);
-    //     if (this.thongTinTaiKhoan.acount_type == "Nhà phân phối") { 
-    //       console.log(this.thongTinTaiKhoan);
-    //       this.router.navigate(['/nhaphanphoi'],{ skipLocationChange: true }); 
-    //     }
-    //     else if (this.thongTinTaiKhoan.acount_type == "Nhà cung cấp") {
-    //       this.router.navigateByUrl("/nhacungcap");
-    //     }
-    //     else if (this.thongTinTaiKhoan.acount_type == "Siêu thị") {
-    //       this.router.navigateByUrl("/sieuthi");
-    //     }
-    //   }
-        
-    // }); 
+    // res la ket qua tra ve tu server
+    await this.http.post(url, body, {headers: headers})
+    .toPromise()
+    .then(res => res.text())
+    .then(resJson => {
+      console.log(resJson);
+    }); 
   }
   hienthi() {
      //console.log(this.loginService.getThongTinTaiKhoan());
