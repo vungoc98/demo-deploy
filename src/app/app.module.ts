@@ -16,10 +16,14 @@ const routesConfig: Routes = [
     LoginComponent
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
    // AppRoutingModule
     RouterModule.forRoot(routesConfig,{onSameUrlNavigation: 'reload'}),
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]

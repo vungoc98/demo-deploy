@@ -18,8 +18,7 @@ export class LoginComponent implements OnInit {
   login = true;
   info: Login;
   @Output() onLogin: EventEmitter<any>;
-  constructor( private fb: FormBuilder, private http: Http, private router: Router) { 
-    this.onLogin = new EventEmitter();
+  constructor( private fb: FormBuilder, private http: Http, private router: Router) {  
   }
 
   ngOnInit() {
