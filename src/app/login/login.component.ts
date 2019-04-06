@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
 
   async onSubmit() { 
     // tao duong dan can post len
-    const url = "http://localhost:3000/login";
+    const url = "https://ngoc-demo-deploy-app.herokuapp.com/login";
 
     // tao header
     const headers = new Headers({ 'Content-Type': 'application/json' });
