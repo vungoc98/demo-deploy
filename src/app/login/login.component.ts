@@ -91,5 +91,3 @@ class Login {
     this.acount_type = acount_type;
   }
 }
-
-}
