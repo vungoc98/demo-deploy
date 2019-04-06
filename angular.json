@@ -23,11 +23,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "./node_modules/bootstrap/static/css/bootstrap.min.css"
+              "src/css/bootstrap.min.css"
             ],
             "scripts": [
-               
+              "src/js/bootstrap.min.js",
+              "src/js/jquery-3.3.1.min.js"
             ],
             "es5BrowserSupport": true
           },
