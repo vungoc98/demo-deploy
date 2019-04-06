@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
     .toPromise()
     .then(res => res.text())
     .then(resJson => {
-      console.log(resJson);
+      console.log("received: " + resJson);
     }); 
   }
   hienthi() {
