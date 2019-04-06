@@ -15,7 +15,7 @@ res.sendFile(path.join(__dirname+'/dist/demo-deploy/index.html'));
 
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 8080);
-Xu ly thong tin dang nhap
+//Xu ly thong tin dang nhap
 app.post('/login', jsonParser, (req, res) => {
 	// var sql = "select * from user1 where username = ? and password = ?";
 	
