@@ -21,6 +21,16 @@ export class RegisterComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.formRegister = this.fb.group({
+      name: '',
+      username: '',
+      password: '',
+      password1: '',
+      address: '',
+      mobile: '',
+      email: ['', [Validators.email, gmailValidator]],
+      image: ''
+    });
     // Lay nhom nguoi dung
     // url ket noi toi server
     const url = "https://ngoc-demo-deploy-app.herokuapp.com/getAcount_Type";
@@ -37,18 +47,7 @@ export class RegisterComponent implements OnInit {
         this.acount_type.push(resJson[i].acount_type); 
       }
     })
-    console.log("Acount_type: " + this.acount_type);
-  	this.formRegister = this.fb.group({
-  		name: '',
-  		username: '',
-  		password: '',
-  		password1: '',
-  		address: '',
-  		mobile: '',
-  		email: ['', [Validators.email, gmailValidator]],
-  		image: ''
-  	});
-     console.log(this.acount_type);
+    console.log("Acount_type: " + this.acount_type); 
   }
 
   // chon anh
