@@ -3,15 +3,14 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Http, Headers } from '@angular/http';
 import 'rxjs'; 
 import { Router } from '@angular/router';
-import { LoginService } from './login.service';
-import { NPPService } from 'src/app/nha-phan-phoi/nha-phan-phoi.service';
+import { LoginService } from './login.service'; 
 import { AcountInfoService } from '../acount-info.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [ LoginService, NPPService ]
+  providers: [ LoginService]
 })
 export class LoginComponent implements OnInit {
   
