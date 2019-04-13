@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
     // headers dinh dang du lieu gui - nhan
     const headers = new Headers({ 'Content-Type': 'application/json' });
 
-    await this.http.get(url, { headers: headers })
+    await this.http.post(url,null, { headers: headers })
     .toPromise() 
     .then(res => res.json())
     .catch(err => {

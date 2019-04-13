@@ -82,7 +82,7 @@ app.post('/getAcountInfo', jsonParser, (req, res) => {
 	})
 })
 // Lay nhom nguoi dung
-app.get('/getAcount_Type', (req, res) => {
+app.post('/getAcount_Type', (req, res) => {
 	var sql = "select distinct acount_type from user1 where acount_type != ?";
 	sql = mysql.format(sql, 'Nhà phân phối');
 	con.query(sql, function(err, results) {
