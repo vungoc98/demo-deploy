@@ -32,8 +32,10 @@ export class RegisterComponent implements OnInit {
     .toPromise()
     .then(res => res.json())
     .then(resJson => {
-      console.log("ResJSOn: " + resJson.length);
-      this.acount_type = resJson;
+      console.log("So luong nhan duoc: " + resJson.length);
+      for(var i = 0; i < resJson.length; i++) {
+        this.acount_type.push(resJson[i].acount_type); 
+      }
     })
     console.log("Acount_type: " + this.acount_type);
   	this.formRegister = this.fb.group({
