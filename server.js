@@ -86,8 +86,7 @@ app.post('/getAcount_Type', (req, res) => {
 	var sql = "select distinct acount_type from user1 where acount_type != ?";
 	sql = mysql.format(sql, 'Nhà phân phối');
 	con.query(sql, function(err, results) {
-		if (err) res.send(JSON.stringify({username: "ngoc"}));
-		results = JSON.stringify({acount_type: "sieu thi"});
+		if (err) throw err; 
 		res.send(results);
 		// for (var i = 0; i < results.length; i++) {
 		// 	this.login = new Login("", "","", "", "", "", "", results[i].acount_type);	 
