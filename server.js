@@ -20,12 +20,14 @@ var con = mysql.createConnection({
 	database: 'sql12287863',
 	host:  'sql12.freemysqlhosting.net',
 	user: 'sql12287863',
-	password: 'cQ4ERTAMTQ'
+	password: 'cQ4ERTAMTQ',
+	charset : 'utf8'
 });
 
 con.connect(function(err) {
 	if (err) {
-		console.log('error');
+		res.send('error');
+		res.end();
 	}
 	else 
 		console.log("Connected");
