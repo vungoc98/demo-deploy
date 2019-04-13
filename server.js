@@ -42,7 +42,7 @@ class Login {
 		this.mobile = mobile;
 		this.acount_type = acount_type;
 	}
-}
+} 
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 3000);
 // Xu ly thong tin dang nhap
@@ -87,7 +87,10 @@ app.get('/getAcount_Type', (req, res) => {
 	sql = mysql.format(sql, 'Nhà phân phối');
 	con.query(sql, function(err, results) {
 		if (err) throw err;
-		res.send(JSON.stringify(results)); 
+		for (var i = 0; i < results.length; i++) {
+			this.login = new Login("", "","", "", "", "", "", results[i].acount_type);	 
+		}
+		res.send(this.login);
 	})
 })
 
@@ -191,7 +194,7 @@ app.get('/getMenuProduct', (req, res) => {
 		if (err) throw err;
 		for(var i = 0; i < results.length; i++) {
 			products[i] = new product(results[i].id, results[i].code, results[i].name, results[i].price, results[i].description,
-				results[i].image, results[i].product_category_id, results[i].create_date, results[i].update_date);
+				results[i].image, results[i].product_category_id, results[i].create_date, results[i].update_date); 
 			//console.log(products);
 		}  
 		res.send(products);
