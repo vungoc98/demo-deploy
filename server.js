@@ -156,8 +156,7 @@ app.post('/createProduct', jsonParser, (req, res) => {
 	sql = mysql.format(sql, [req.body.product_type]); 
 	con.query(sql, function(err, results) {
 		if (err) {
-			res.send("0");
-			throw err;
+			res.send("0"); 
 		}
 		product_category_id = results[0].id;
 		console.log("id: " + product_category_id);
@@ -171,8 +170,7 @@ app.post('/createProduct', jsonParser, (req, res) => {
 		 
 		con.query(sql, function(err, results) {
 			if (err) {
-				res.send("0");
-				throw err;
+				res.send("0"); 
 			}
 			 
 			res.send("1");
