@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
         this.acountInfo.setInfomation(this.info); 
         if (this.thongTinTaiKhoan.acount_type == "Nhà phân phối") { 
           console.log(this.thongTinTaiKhoan);
-          this.router.navigate(['/nhaphanphoi'],{ skipLocationChange: true }); 
+          this.router.navigate(['/nhaphanphoi']); 
         }
         else if (this.thongTinTaiKhoan.acount_type == "Nhà cung cấp") {
           this.router.navigateByUrl("/nhacungcap");
