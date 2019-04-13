@@ -42,10 +42,7 @@ export class RegisterComponent implements OnInit {
     .toPromise()
     .then(res => res.json())
     .then(resJson => {
-      console.log("So luong nhan duoc: " + resJson.length);
-      for(var i = 0; i < resJson.length; i++) {
-        this.acount_type.push(resJson[i].acount_type); 
-      }
+      this.acount_type = resJson;
     })
     console.log("Acount_type: " + this.acount_type); 
   }
@@ -91,13 +88,11 @@ export class RegisterComponent implements OnInit {
       this.http.post(url, body, { headers: headers })
       .toPromise()
       .then(res => res.json())
-      .then(resJson => {
-        console.log("res: " + resJson);
+      .then(resJson => { 
         if (resJson.check == 0) {
           alert("Tên tài khoản bị trùng.");
         }
-        else {
-          console.log("RES: " + resJson);
+        else { 
           this.info = new Login(resJson.check, resJson.username, resJson.password, resJson.name, resJson.address, resJson.email, resJson.mobile, resJson.count_type);
           this.acountInfo.setInfomation(this.info);
           // sessionStorage.setItem('username', resJson.username);
