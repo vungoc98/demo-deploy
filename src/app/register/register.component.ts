@@ -40,14 +40,16 @@ export class RegisterComponent implements OnInit {
 
     await this.http.get(url, { headers })
     .toPromise()
-    .then(res => res.json())
-    .then(resJson => {
-      console.log("So luong nhan duoc: " + resJson.length);
-      for(var i = 0; i < resJson.length; i++) {
-        this.acount_type.push(resJson[i].acount_type); 
-      }
+    .then(res => {
+      console.log("res: " + res);
     })
-    console.log("Acount_type: " + this.acount_type); 
+    // .then(resJson => {
+    //   console.log("So luong nhan duoc: " + resJson.length);
+    //   for(var i = 0; i < resJson.length; i++) {
+    //     this.acount_type.push(resJson[i].acount_type); 
+    //   }
+    // })
+    // console.log("Acount_type: " + this.acount_type); 
   }
 
   // chon anh
