@@ -31,7 +31,7 @@ export class TaoMoiSanPhamComponent implements OnInit {
     } 
 
     // Lay thong tin nhom san pham
-    const url = "http://localhost:3000/getProduct_Type";
+    const url = "https://ngoc-demo-deploy-app.herokuapp.com/getProduct_Type";
     
     const headers = new Headers({ 'Content-Type': 'application/json' });
 
@@ -62,7 +62,7 @@ export class TaoMoiSanPhamComponent implements OnInit {
       var index = formCreateProduct.value.image.lastIndexOf("\\");
       var image = formCreateProduct.value.image.substring(index + 1);
       
-      const url = "http://localhost:3000/createProduct";
+      const url = "https://ngoc-demo-deploy-app.herokuapp.com/createProduct";
 
       const headers = new Headers({ 'Content-Type': 'application/json' });
 
