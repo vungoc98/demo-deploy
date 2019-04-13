@@ -87,7 +87,10 @@
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "../node_modules/bootstrap/dist/js/bootstrap.js.min",
+              "../node_modules/bootstrap/dist/js/jquery-3.3.1.min.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
