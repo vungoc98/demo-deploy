@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   login = true;
   info: Login;
   @Output() onLogin: EventEmitter<any>;
-  constructor(private acountInfo: AcountInfoService, private nppservice: NPPService, private fb: FormBuilder, private http: Http, private router: Router, private loginService: LoginService) { 
+  constructor(private acountInfo: AcountInfoService,  private fb: FormBuilder, private http: Http, private router: Router, private loginService: LoginService) { 
     this.onLogin = new EventEmitter();
   }
 
