@@ -28,15 +28,14 @@ export class RegisterComponent implements OnInit {
     // headers dinh dang du lieu gui - nhan
     const headers = new Headers({'Content-Type': 'application/json'});
 
-    this.http.get(url, { headers })
+    await this.http.get(url, { headers })
     .toPromise()
     .then(res => res.json())
     .then(resJson => {
-      for(var i = 0; i < resJson.length; i++) {
-        this.acount_type.push(resJson[i].acount_type); 
-      }
+      console.log("ResJSOn: " + resJson.length);
+      this.acount_type = resJson;
     })
-    console.log(this.acount_type);
+    console.log("Acount_type: " + this.acount_type);
   	this.formRegister = this.fb.group({
   		name: '',
   		username: '',
