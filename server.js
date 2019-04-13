@@ -32,7 +32,7 @@ con.connect(function(err) {
 }); 
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 3000);
-//Xu ly thong tin dang nhap
+// Xu ly thong tin dang nhap
 app.post('/login', jsonParser, (req, res) => {
 	var sql = "select * from user1 where username = ? and password = ?";
 	
@@ -40,15 +40,31 @@ app.post('/login', jsonParser, (req, res) => {
 	 
 	con.query(sql, function(err, results) {
 		if (err) throw err; 
-		// if (results.length == 0) {
-		// 	this.login = new Login(check = 0);
-		// }
-		// for (var i = 0; i < results.length; i++) {
-		// 	this.login = new Login(1, results[i].username, results[i].password, results[i].name, results[i].address, results[i].email, results[i].mobile, results[i].acount_type);	 
-		// }
-		// res.send(this.login);
-
-		res.send("information: " + results[0].name + " " + results[0].password + " " + results[0].address);
-	}) 
+		if (results.length == 0) {
+			this.login = new Login(check = 0);
+		}
+		for (var i = 0; i < results.length; i++) {
+			this.login = new Login(1, results[i].username, results[i].password, results[i].name, results[i].address, results[i].email, results[i].mobile, results[i].acount_type);	 
+		}
+		res.send(this.login);
+	})
    
 });
+// Lay thong tin tai khoan khi nguoi dung reload lai page
+app.post('/getAcountInfo', jsonParser, (req, res) => {
+	var sql = "select * from user1 where username = ?";
+	
+	sql = mysql.format(sql, [req.body.username]);
+	 
+	con.query(sql, function(err, results) {
+		if (err) throw err; 
+		if (results.length == 0) {
+			this.login = new Login(check = 0);
+		}
+		for (var i = 0; i < results.length; i++) {
+			this.login = new Login(1, results[i].username, results[i].password, results[i].name, results[i].address, results[i].email, results[i].mobile, results[i].acount_type);	 
+		} 
+		 
+		res.send(this.login);
+	})
+})

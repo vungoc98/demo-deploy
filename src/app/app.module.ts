@@ -7,13 +7,24 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http'; 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { NhaPhanPhoiComponent } from './nha-phan-phoi/nha-phan-phoi.component';
+import { HeaderNPPComponent } from './header-npp.component';
+import { NPPComponent } from './npp.component';
+// service
+import { AcountInfoService } from './acount-info.service';
 const routesConfig: Routes = [
-  { path: '', component: LoginComponent }
+  { path: '', component: LoginComponent }, 
+
+  // nha phan phoi
+  { path: 'nhaphanphoi', component: NhaPhanPhoiComponent }, 
 ]
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    NhaPhanPhoiComponent,
+    HeaderNPPComponent,
+    NPPComponent,
   ],
   imports: [
     FormsModule,
@@ -25,7 +36,7 @@ const routesConfig: Routes = [
     HttpClientModule,
     HttpModule
   ],
-  providers: [],
+  providers: [AcountInfoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
