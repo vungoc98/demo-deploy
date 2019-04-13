@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
     await this.http.get(url, { headers })
     .toPromise()
     .then(res => {
-      console.log("res: " + res);
+      console.log("res: " + res.json());
     })
     // .then(resJson => {
     //   console.log("So luong nhan duoc: " + resJson.length);
