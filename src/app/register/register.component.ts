@@ -39,11 +39,9 @@ export class RegisterComponent implements OnInit {
     const headers = new Headers({ 'Content-Type': 'application/json' });
 
     await this.http.get(url, { headers: headers })
-    .toPromise()
-    .then(res => res.json())
-    .then(resJson => {
-      this.acount_type = resJson;
-    })
+    .toPromise() 
+    .then(res => res.text())
+    .then(text => console.log(text));
     console.log("Acount_type: " + this.acount_type); 
   }
 
