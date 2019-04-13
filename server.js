@@ -30,6 +30,18 @@ con.connect(function(err) {
 	else 
 		console.log("Connected");
 }); 
+class Login {
+	constructor(check, username, password, name, address, email, mobile, acount_type) {
+		this.check = check; // kiem tra thong tin tai khoan dang nhap dung hay sai (1: dung, 0: sai)
+		this.username = username;
+		this.password = password;
+		this.name = name;
+		this.address = address;
+		this.email = email;
+		this.mobile = mobile;
+		this.acount_type = acount_type;
+	}
+}
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 3000);
 // Xu ly thong tin dang nhap
