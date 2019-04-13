@@ -87,10 +87,8 @@ app.get('/getAcount_Type', (req, res) => {
 	sql = mysql.format(sql, 'Nhà phân phối');
 	con.query(sql, function(err, results) {
 		if (err) throw err;
-		for (var i = 0; i < results.length; i++) {
-			this.login = new Login("", "","", "", "", "", "", results[i].acount_type);	 
-		}
-		res.send(this.login);
+		console.log("Server ketqua: " + results.length);
+		res.send(results);
 	})
 })
 

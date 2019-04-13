@@ -33,23 +33,21 @@ export class RegisterComponent implements OnInit {
     });
     // Lay nhom nguoi dung
     // url ket noi toi server
-    const url = "https://ngoc-demo-deploy-app.herokuapp.com/getAcount_Type";
+    const url = "/getAcount_Type";
 
     // headers dinh dang du lieu gui - nhan
-    const headers = new Headers({'Content-Type': 'application/json'});
+    const headers = new Headers({ 'Content-Type': 'application/json' });
 
     await this.http.get(url, { headers: headers })
     .toPromise()
-    .then(res => {
-      console.log("res: " + res.json());
+    .then(res => res.json())
+    .then(resJson => {
+      console.log("So luong nhan duoc: " + resJson.length);
+      for(var i = 0; i < resJson.length; i++) {
+        this.acount_type.push(resJson[i].acount_type); 
+      }
     })
-    // .then(resJson => {
-    //   console.log("So luong nhan duoc: " + resJson.length);
-    //   for(var i = 0; i < resJson.length; i++) {
-    //     this.acount_type.push(resJson[i].acount_type); 
-    //   }
-    // })
-    // console.log("Acount_type: " + this.acount_type); 
+    console.log("Acount_type: " + this.acount_type); 
   }
 
   // chon anh
