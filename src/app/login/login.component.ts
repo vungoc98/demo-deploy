@@ -49,29 +49,17 @@ export class LoginComponent implements OnInit {
     .then(res => res.json())
     .then(resJson => {
       this.thongTinTaiKhoan = resJson;
+      console.log("Lay duoc: " + this.thongTinTaiKhoan);
       if (this.thongTinTaiKhoan.check == 0) {
         alert("Tài khoản hoặc mật khẩu không đúng");
       }
        
       else{ 
-         this.info = new Login(resJson.check, resJson.username, resJson.password, resJson.name, resJson.address, resJson.email, resJson.mobile, resJson.count_type);
-         this.acountInfo.setInfomation(this.info);
-        if (this.thongTinTaiKhoan.acount_type == "Nhà phân phối") {
-         // this.loginService.setThongTinTaiKhoan(this.thongTinTaiKhoan);
-        //  this.onLogin.emit(this.loginService.getThongTinTaiKhoan());
-          // this.router.navigate(['/nhaphanphoi'], {queryParams: {username: this.thongTinTaiKhoan.username, password: this.thongTinTaiKhoan.password, 
-          //   name: this.thongTinTaiKhoan.name, address: this.thongTinTaiKhoan.address, email: this.thongTinTaiKhoan.email, 
-          //   mobile: this.thongTinTaiKhoan.mobile}});
-          // sessionStorage.setItem('username', this.thongTinTaiKhoan.username);
-          // sessionStorage.setItem('password', this.thongTinTaiKhoan.password);
-          // sessionStorage.setItem('name', this.thongTinTaiKhoan.name);
-          // sessionStorage.setItem('address', this.thongTinTaiKhoan.address);
-          // sessionStorage.setItem('email', this.thongTinTaiKhoan.email);
-          // sessionStorage.setItem('mobile', this.thongTinTaiKhoan.mobile);
+        this.info = new Login(resJson.check, resJson.username, resJson.password, resJson.name, resJson.address, resJson.email, resJson.mobile, resJson.count_type);
+        this.acountInfo.setInfomation(this.info);
+        if (this.thongTinTaiKhoan.acount_type == "Nhà phân phối") { 
           console.log(this.thongTinTaiKhoan);
-          this.router.navigate(['/nhaphanphoi'],{ skipLocationChange: true });
-         // console.log("Lay username: " + localStorage.getItem('username'));
-          //this.router.navigateByUrl("/nhaphanphoi");
+          this.router.navigate(['/nhaphanphoi'],{ skipLocationChange: true }); 
         }
         else if (this.thongTinTaiKhoan.acount_type == "Nhà cung cấp") {
           this.router.navigateByUrl("/nhacungcap");
@@ -81,16 +69,8 @@ export class LoginComponent implements OnInit {
         }
       }
         
-    });
-    
-    // this.data = this.loginService.getThongTinTaiKhoan();
-    // this.login = false;
-    // this.nha_phan_phoi = true;
-    
-  }
-  hienthi() {
-     console.log(this.loginService.getThongTinTaiKhoan());
-  }
+    }); 
+  } 
 
 }
 class Login { 
