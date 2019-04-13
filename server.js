@@ -87,7 +87,7 @@ app.get('/getAcount_Type', (req, res) => {
 	sql = mysql.format(sql, 'Nhà phân phối');
 	con.query(sql, function(err, results) {
 		if (err) throw err;
-		results = JSON.stringify({"acount_type": "sieu thi"});
+		results = JSON.stringify({acount_type: "sieu thi"});
 		res.send(results);
 		// for (var i = 0; i < results.length; i++) {
 		// 	this.login = new Login("", "","", "", "", "", "", results[i].acount_type);	 
