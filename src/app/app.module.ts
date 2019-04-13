@@ -12,12 +12,20 @@ import { HeaderNPPComponent } from './header-npp.component';
 import { NPPComponent } from './npp.component';
 // service
 import { AcountInfoService } from './acount-info.service';
+import { RegisterComponent } from './register/register.component';
+import { TaoMoiSanPhamComponent } from './he-thong-san-pham/tao-moi-san-pham/tao-moi-san-pham.component';
+import { DanhSachHangHoaComponent } from './he-thong-san-pham/danh-sach-hang-hoa/danh-sach-hang-hoa.component';
 const routesConfig: Routes = [
-  { path: '', component: LoginComponent }, 
-
+  { path: '', component: LoginComponent },  
+  { path: 'register', component: RegisterComponent },
+  
   // nha phan phoi
   { path: 'nhaphanphoi', component: NhaPhanPhoiComponent }, 
+  { path: 'hethongsanpham/taomoisanpham', component: TaoMoiSanPhamComponent },
+  { path: 'hethongsanpham/danhsachsanpham', component: DanhSachHangHoaComponent },
+  
 ]
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +33,9 @@ const routesConfig: Routes = [
     NhaPhanPhoiComponent,
     HeaderNPPComponent,
     NPPComponent,
+    RegisterComponent,
+    TaoMoiSanPhamComponent,
+    DanhSachHangHoaComponent,
   ],
   imports: [
     FormsModule,
