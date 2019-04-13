@@ -44,7 +44,7 @@ export class NhaPhanPhoiComponent implements OnInit {
    	this.isShow3 = false;
    	this.isShow4 = true;
   }
-  constructor(private route: ActivatedRoute, private nppservice: NPPService, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.acountInfo = new AcountInfo();
   }
 

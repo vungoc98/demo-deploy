@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { LoginService } from './login/login.service'; 
+import { AcountInfoService } from './acount-info.service';
 import { Http, Headers } from '@angular/http';
 import { Router } from '@angular/router'
 
