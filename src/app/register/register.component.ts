@@ -38,10 +38,10 @@ export class RegisterComponent implements OnInit {
     // headers dinh dang du lieu gui - nhan
     const headers = new Headers({'Content-Type': 'application/json'});
 
-    await this.http.get(url, { headers })
+    await this.http.get(url, { headers: headers })
     .toPromise()
     .then(res => {
-      console.log("res: " + res);
+      console.log("res: " + res.text());
     })
     // .then(resJson => {
     //   console.log("So luong nhan duoc: " + resJson.length);
