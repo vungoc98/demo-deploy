@@ -48,8 +48,7 @@ export class LoginComponent implements OnInit {
     .toPromise()
     .then(res => res.json())
     .then(resJson => {
-      this.thongTinTaiKhoan = resJson;
-      console.log("Lay duoc: " + this.thongTinTaiKhoan);
+      this.thongTinTaiKhoan = resJson; 
       if (this.thongTinTaiKhoan.check == 0) {
         alert("Tài khoản hoặc mật khẩu không đúng");
       }
@@ -57,8 +56,7 @@ export class LoginComponent implements OnInit {
       else{ 
         this.info = new Login(resJson.check, resJson.username, resJson.password, resJson.name, resJson.address, resJson.email, resJson.mobile, resJson.count_type);
         this.acountInfo.setInfomation(this.info); 
-        if (this.thongTinTaiKhoan.acount_type == "Nhà phân phối") { 
-          console.log(this.thongTinTaiKhoan);
+        if (this.thongTinTaiKhoan.acount_type == "Nhà phân phối") {  
           this.router.navigate(['/nhaphanphoi']); 
         }
         else if (this.thongTinTaiKhoan.acount_type == "Nhà cung cấp") {

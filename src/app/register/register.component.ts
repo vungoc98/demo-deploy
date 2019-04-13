@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
   async ngOnInit() {
     // Lay nhom nguoi dung
     // url ket noi toi server
-    const url = "http://localhost:3000/getAcount_Type";
+    const url = "https://ngoc-demo-deploy-app.herokuapp.com/getAcount_Type";
 
     // headers dinh dang du lieu gui - nhan
     const headers = new Headers({'Content-Type': 'application/json'});

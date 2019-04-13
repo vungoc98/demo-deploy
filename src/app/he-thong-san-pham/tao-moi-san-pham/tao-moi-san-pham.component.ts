@@ -39,6 +39,7 @@ export class TaoMoiSanPhamComponent implements OnInit {
     .toPromise()
     .then(res => res.json())
     .then(resJson => {
+    	console.log("SO luong nhom san pham: " + resJson.length);
       for (var i = 0; i < resJson.length; i++) {
         this.product_type[i] = resJson[i].name;
       }
@@ -46,9 +47,7 @@ export class TaoMoiSanPhamComponent implements OnInit {
   }
 
   // chon anh
-  changeImage() {
-    alert("vaoday");
-    console.log("vao day");
+  changeImage() { 
     this.srcimage = this.image.substr(this.image.lastIndexOf("\\") + 1);
   }
 
