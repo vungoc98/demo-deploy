@@ -47,6 +47,7 @@ export class DanhSachHangHoaComponent implements OnInit {
   	.toPromise()
   	.then(res => res.json())
   	.then(resJson => {
+  	  console.log("so luong san pham: " + resJson.length);
       this.products = resJson;  
   	});
 
@@ -62,6 +63,7 @@ export class DanhSachHangHoaComponent implements OnInit {
     .toPromise()
     .then(res => res.json())
     .then(resJson => {
+    	console.log(" So luong Product_type: " + resJson.length);
       for (var i = 0; i < resJson.length; i++) {
         this.product_type[i] = resJson[i].name;
       }
