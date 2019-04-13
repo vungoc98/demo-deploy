@@ -87,7 +87,7 @@ app.get('/getAcount_Type', (req, res) => {
 	sql = mysql.format(sql, 'Nhà phân phối');
 	con.query(sql, function(err, results) {
 		if (err) throw err;
-		res.send(results); 
+		res.send(JSON.parse(results)); 
 	})
 })
 
