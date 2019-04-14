@@ -22,8 +22,10 @@ const routesConfig: Routes = [
   { path: '', component: LoginComponent },  
   { path: 'register', component: RegisterComponent },
   
-  // nha phan phoi
+  // 1. nha phan phoi
   { path: 'nhaphanphoi', component: NhaPhanPhoiComponent }, 
+  
+  // 1.1. He thong san pham
   { path: 'hethongsanpham/taomoisanpham', component: TaoMoiSanPhamComponent },
   { path: 'hethongsanpham/danhsachsanpham', component: DanhSachHangHoaComponent },
   { path: 'hethongsanpham/danhsachsanpham/capnhatsanpham/:id', component: CapNhatSanPhamComponent },

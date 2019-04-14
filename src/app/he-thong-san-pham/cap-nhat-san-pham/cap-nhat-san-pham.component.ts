@@ -51,7 +51,7 @@ export class CapNhatSanPhamComponent implements OnInit {
       this.formUpdateProduct = this.fb.group({
       name: resJson[0].name,
       price: resJson[0].price, 
-      image: '',
+      image: "assets/images/" + resJson[0].image,
       description: resJson[0].description
       });
       this.image = "assets/images/" + resJson[0].image;
