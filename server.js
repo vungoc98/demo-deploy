@@ -82,14 +82,23 @@ app.post('/getAcountInfo', jsonParser, (req, res) => {
 	})
 })
 // Lay nhom nguoi dung
-app.get("/getAcount_Type", jsonParser, (req, res) => {
+app.get("/getAcount_Type", (req, res) => {
 	// var sql = "select distinct acount_type from user1 where acount_type != ?";
 	// sql = mysql.format(sql, 'Nhà phân phối');
 	// con.query(sql, function(err, results) {
 	// 	if (err) throw err;  
 	// 	res.send(results);
 	// })
-	res.send("hello");
+	res.json({
+           Customer_ID: 1507843123970,
+           Bank_Account_Number: 7885236985412589,
+           Bank_Name: "Some Bank",
+           Bank_Address1: "Some Address",
+           Bank_Address2: null,
+           Account_Holder_Name: "Some Name",
+           Account_Type: "Savings",
+           Transaction_Limit: 5000
+       });
 })
 app.post('/getAcount_Type', jsonParser, (req, res) => {
 	var sql = "select distinct acount_type from user1 where acount_type != ?";
