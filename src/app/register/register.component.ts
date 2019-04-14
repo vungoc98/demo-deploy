@@ -38,12 +38,16 @@ export class RegisterComponent implements OnInit {
     // headers dinh dang du lieu gui - nhan
     const headers = new Headers({ 'Content-Type': 'application/json' });
 
-    await this.http.get(url, { headers: headers }) 
-    .toPromise()  
-    .then(res => res.text())
-    .then(resText => console.log(resText))
-    .catch(err => console.log("sever error"));
-    //console.log("Acount_type: " + this.acount_type);
+    await this.http.get(url, { headers })
+    .toPromise()
+    .then(res => res.json())
+    .then(resJson => {
+      this.acount_type = resJson;
+    })
+    console.log("So luong acount_type: " + this.acount_type.length);
+    for (var i = 0; i < this.acount_type.length; i++) {
+      console.log("acount_type: " + this.acount_type[i]);
+    }
   }
   // chon anh
   changeListner(event) {
