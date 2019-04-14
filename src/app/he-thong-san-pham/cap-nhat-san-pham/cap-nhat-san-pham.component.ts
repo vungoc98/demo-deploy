@@ -51,7 +51,7 @@ export class CapNhatSanPhamComponent implements OnInit {
       this.formUpdateProduct = this.fb.group({
       name: resJson[0].name,
       price: resJson[0].price, 
-      image: "assets/images/" + resJson[0].image,
+      image: '',
       description: resJson[0].description
       });
       this.image = "assets/images/" + resJson[0].image;
@@ -93,6 +93,8 @@ export class CapNhatSanPhamComponent implements OnInit {
     // Tach image 
     var index = formUpdateProduct.value.image.lastIndexOf("\\");
     var image = formUpdateProduct.value.image.substring(index + 1);
+    // Truong hop khong chon lai anh cua san pham
+    if (image == '') image = this.image.replace("assets/images/", ""); 
     const url = "https://ngoc-demo-deploy-app.herokuapp.com/updateProduct";
     const headers = new Headers( { 'Content-Type': 'application/json' });
     const body = JSON.stringify({ 'id': this.id, 'name': formUpdateProduct.value.name, 'price': formUpdateProduct.value.price, 
