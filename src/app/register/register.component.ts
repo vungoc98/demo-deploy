@@ -42,11 +42,13 @@ export class RegisterComponent implements OnInit {
     .toPromise()
     .then(res => res.json())
     .then(resJson => {
-      this.acount_type = resJson;
+      for (var i = 0; i < resJson.length; i++) {
+        this.acount_type[i] = resJson[i].acount_type;
+      }
     })
     console.log("So luong acount_type: " + this.acount_type.length);
     for (var i = 0; i < this.acount_type.length; i++) {
-      console.log("acount_type: " + this.acount_type[i]);
+      console.log("acount_type: " + this.acount_type[i].acount_type);
     }
   }
   // chon anh
