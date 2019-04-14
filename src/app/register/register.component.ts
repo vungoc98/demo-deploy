@@ -40,10 +40,8 @@ export class RegisterComponent implements OnInit {
 
     await this.http.get(url, { headers: headers })
     .toPromise() 
-    .then(res => {
-      this.acount_type = res.json();
-      console.log("res: " + res);
-    }) 
+    .then(res => res.text())
+    .then(resText => console.log(resText)) 
     .catch(err => console.log("Server error"));
   }
   // chon anh
