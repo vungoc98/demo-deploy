@@ -83,29 +83,13 @@ app.get('*', (req, res) => {
 });
 // Lay nhom nguoi dung
 app.get("/getAcount_Type", (req, res) => {
-	// var sql = "select distinct acount_type from user1 where acount_type != ?";
-	// sql = mysql.format(sql, 'Nhà phân phối');
-	// con.query(sql, function(err, results) {
-	// 	if (err) throw err;  
-	// 	res.send(results);
-	// })
 	var sql = "select distinct acount_type from user1 where acount_type != ?";
 	sql = mysql.format(sql, 'Nhà phân phối');
 	con.query(sql, function(err, results) {
-		if (err) throw err;   
-		this.login = new Login(1, "","", "", "", "", "", results[0].acount_type);	  
-		res.send(this.login);
+		if (err) throw err;  
+		res.send(results);
 	}) 
-})
-app.post('/getAcount_Type', jsonParser, (req, res) => {
-	var sql = "select distinct acount_type from user1 where acount_type != ?";
-	sql = mysql.format(sql, 'Nhà phân phối');
-	con.query(sql, function(err, results) {
-		if (err) throw err;   
-		this.login = new Login(1, "","", "", "", "", "", results[0].acount_type);	  
-		res.send(this.login);
-	}) 
-})
+}) 
 
 // Dang ky tai khoan
 app.post('/register', jsonParser, (req, res) => {
