@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
 
     await this.http.get(url)
     .toPromise() 
-    .then(res => res.json().data)
+    .then(res => res.json())
     .then(resText => console.log(resText)) 
     .catch(err => console.log("Server error"));
   }
