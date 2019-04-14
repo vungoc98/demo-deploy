@@ -101,15 +101,16 @@ app.get("/getAcount_Type", (req, res) => {
        });
 })
 app.post('/getAcount_Type', jsonParser, (req, res) => {
-	var sql = "select distinct acount_type from user1 where acount_type != ?";
-	sql = mysql.format(sql, 'Nhà phân phối');
-	con.query(sql, function(err, results) {
-		if (err) throw err;  
-		for (var i = 0; i < results.length; i++) {
-			this.login = new Login("", "","", "", "", "", "", results[i].acount_type);	 
-		}
-		res.send(this.login);
-	})
+	// var sql = "select distinct acount_type from user1 where acount_type != ?";
+	// sql = mysql.format(sql, 'Nhà phân phối');
+	// con.query(sql, function(err, results) {
+	// 	if (err) throw err;  
+	// 	for (var i = 0; i < results.length; i++) {
+	// 		this.login = new Login("", "","", "", "", "", "", results[i].acount_type);	 
+	// 	}
+	// 	res.send(this.login);
+	// })
+	res.send(req.body.name);
 })
 
 // Dang ky tai khoan
