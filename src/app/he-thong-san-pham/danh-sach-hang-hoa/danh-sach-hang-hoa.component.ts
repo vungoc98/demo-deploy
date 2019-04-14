@@ -96,7 +96,7 @@ export class DanhSachHangHoaComponent implements OnInit {
   async onSearch(formSearch) { 
     this.router.navigate(['/hethongsanpham/danhsachsanpham'], {queryParams: {name: formSearch.value.name.trim(), code: formSearch.value.code.trim(), type: this.selectedType}}); 
     await this.display_products.splice(0, this.products.length);
-    const url = "http://localhost:3000/searchProduct";
+    const url = "https://ngoc-demo-deploy-app.herokuapp.com/searchProduct";
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const body = JSON.stringify({ 'name': formSearch.value.name.trim(), 'code': formSearch.value.code.trim(), 'product_category_name': this.selectedType });
 
