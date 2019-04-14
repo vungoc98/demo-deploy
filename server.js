@@ -308,3 +308,67 @@ app.post('/updateProduct', jsonParser, (req, res) => {
 		})
 	}) 
 })
+// 1.5. Hien thi danh sach nhom san pham 
+let product_category = require('./product_category.js'); // Lop Product
+product_categorys = new Array(); // Mang chua cac san pham
+app.get('/getMenuProduct_Category', (req, res) => { 
+	product_categorys.splice(0, products.length);
+	var sql = `select id, name, description, date_format(create_date, '%d-%m-%Y') as create_date, date_format(update_date, '%d-%m-%Y') as  update_date 
+	from product_category where dele = 0`;
+	con.query(sql, function(err, results) { 
+		if (err) throw err;
+		for(var i = 0; i < results.length; i++) {
+			product_categorys[i] = new product_category(results[i].id, results[i].name, results[i].description, results[i].create_date, results[i].update_date);
+		}
+		res.send(product_categorys);
+	})
+})
+
+// 1.6. Tao moi nhom san pham
+app.post('/createProduct_Category', jsonParser, (req, res) => { 
+	// ngay hien tai => tuong duong voi ngay tao thong tin
+	var create_date = (new Date()).getFullYear() + "-" + ((new Date()).getMonth() + 1) + "-" + ((new Date()).getDate());
+	product_categorys.splice(0, products.length);
+	var sql = "insert into product_category(name, description, dele, create_date) values(?, ?, ?, ?)";
+	sql = mysql.format(sql, [req.body.name, req.body.description, 0, create_date]);
+	con.query(sql, function(err, results) {
+		if (err) throw err;
+		var sql = `select id, name, description, date_format(create_date, '%d-%m-%Y') as create_date, date_format(update_date, '%d-%m-%Y') as  update_date 
+	from product_category`;
+		con.query(sql, function(err, results) { 
+			if (err) throw err;
+			for(var i = 0; i < results.length; i++) {
+				product_categorys[i] = new product_category(results[i].id, results[i].name, results[i].description, results[i].create_date, results[i].update_date);
+			}
+			res.send(product_categorys);
+		})
+	})
+})
+
+// 1.7. Cap nhat thong tin nhom san pham
+// Lay thong tin nhom san pham can cap nhat
+app.post('/getProductCategoryInfo', jsonParser, (req, res) => {
+	var sql = "select name, description from product_category where name = ?";
+	sql = mysql.format(sql, req.body.name); 
+	con.query(sql, function(err, results) {
+		if (err) throw err;
+		res.send(results);
+	})
+})
+
+// Cap nhat thong tin nhom san pham
+app.post('/updateProduct_Category', jsonParser, (req, res) => { 
+	// ngay hien tai => tuong duong voi ngay cap nhat thong tin
+	var update_date = (new Date()).getFullYear() + "-" + ((new Date()).getMonth() + 1) + "-" + ((new Date()).getDate());
+	 
+	var sql = "update product_category set description = ?, update_date = ? where name = ?";
+	sql = mysql.format(sql, [req.body.description, update_date, req.body.name]); 
+	con.query(sql, function(err, results) {
+		if (err) {
+			res.send("0");
+			throw err;
+		}
+		 
+		res.send("1");
+	}) 
+})

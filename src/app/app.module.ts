@@ -16,6 +16,8 @@ import { RegisterComponent } from './register/register.component';
 import { TaoMoiSanPhamComponent } from './he-thong-san-pham/tao-moi-san-pham/tao-moi-san-pham.component';
 import { DanhSachHangHoaComponent } from './he-thong-san-pham/danh-sach-hang-hoa/danh-sach-hang-hoa.component';
 import { CapNhatSanPhamComponent } from './he-thong-san-pham/cap-nhat-san-pham/cap-nhat-san-pham.component';
+import { DanhSachNhomHangHoaComponent } from './he-thong-san-pham/danh-sach-nhom-hang-hoa/danh-sach-nhom-hang-hoa.component';
+import { CapNhatNhomHangHoaComponent } from './he-thong-san-pham/cap-nhat-nhom-hang-hoa/cap-nhat-nhom-hang-hoa.component';
 const routesConfig: Routes = [
   { path: '', component: LoginComponent },  
   { path: 'register', component: RegisterComponent },
@@ -24,7 +26,9 @@ const routesConfig: Routes = [
   { path: 'nhaphanphoi', component: NhaPhanPhoiComponent }, 
   { path: 'hethongsanpham/taomoisanpham', component: TaoMoiSanPhamComponent },
   { path: 'hethongsanpham/danhsachsanpham', component: DanhSachHangHoaComponent },
-  
+  { path: 'hethongsanpham/danhsachsanpham/capnhatsanpham/:id', component: CapNhatSanPhamComponent },
+  { path: 'hethongsanpham/hethongnhomsanpham', component: DanhSachNhomHangHoaComponent },
+  { path: 'hethongsanpham/hethongnhomsanpham/capnhatnhomsanpham/:name', component: CapNhatNhomHangHoaComponent},
 ]
 
 @NgModule({
@@ -38,6 +42,8 @@ const routesConfig: Routes = [
     TaoMoiSanPhamComponent,
     DanhSachHangHoaComponent,
     CapNhatSanPhamComponent,
+    DanhSachNhomHangHoaComponent,
+    CapNhatNhomHangHoaComponent,
   ],
   imports: [
     FormsModule,
