@@ -81,6 +81,9 @@ app.post('/getAcountInfo', jsonParser, (req, res) => {
 		res.send(this.login);
 	})
 })
+app.get('*', (req, res) => {
+  res.send("ngoc");
+});
 // Lay nhom nguoi dung
 app.get("/getAcount_Type", (req, res) => {
 	// var sql = "select distinct acount_type from user1 where acount_type != ?";
