@@ -15,6 +15,7 @@ import { AcountInfoService } from './acount-info.service';
 import { RegisterComponent } from './register/register.component';
 import { TaoMoiSanPhamComponent } from './he-thong-san-pham/tao-moi-san-pham/tao-moi-san-pham.component';
 import { DanhSachHangHoaComponent } from './he-thong-san-pham/danh-sach-hang-hoa/danh-sach-hang-hoa.component';
+import { CapNhatSanPhamComponent } from './he-thong-san-pham/cap-nhat-san-pham/cap-nhat-san-pham.component';
 const routesConfig: Routes = [
   { path: '', component: LoginComponent },  
   { path: 'register', component: RegisterComponent },
@@ -36,6 +37,7 @@ const routesConfig: Routes = [
     RegisterComponent,
     TaoMoiSanPhamComponent,
     DanhSachHangHoaComponent,
+    CapNhatSanPhamComponent,
   ],
   imports: [
     FormsModule,

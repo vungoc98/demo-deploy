@@ -264,3 +264,47 @@ app.post('/searchProduct', jsonParser, (req, res) => {
 	})
 	 
 })
+// 1.4. Cap nhat thong tin san pham
+// Lay thong tin san pham can cap nhat
+app.post('/getProductInfo', jsonParser, (req, res) => {  
+	var sql = `select product.name, price, image, product.description, product_category.name as product_type 
+	from product, product_category where product.id = ?
+		and product_category_id = product_category.id`;
+	sql = mysql.format(sql, req.body.id);
+	console.log(sql);
+	con.query(sql, function(err, results) {
+		if (err) throw err; 
+		res.send(results);
+	})
+})
+
+// Cap nhat thong tin san pham
+app.post('/updateProduct', jsonParser, (req, res) => {
+	var product_category_id;
+	// Tim product_category_id 
+	var sql = "select id from product_category where name = ?";
+	sql = mysql.format(sql, [req.body.product_type]);
+	console.log("sql: " + sql);
+	con.query(sql, function(err, results) {
+		if (err) {
+			res.send("0");
+			throw err;
+		}
+
+		product_category_id = results[0].id; 
+		// ngay hien tai => tuong duong voi ngay cap nhat thong tin
+		var update_date = (new Date()).getFullYear() + "-" + ((new Date()).getMonth() + 1) + "-" + ((new Date()).getDate());
+		 
+		var sql = "update product set name = ?, price = ?, description = ?, image = ?, product_category_id = ?, update_date = ? where id = ?";
+		sql = mysql.format(sql, [req.body.name, req.body.price, req.body.description, req.body.image, product_category_id, update_date, req.body.id]);
+	 	console.log(sql);
+		con.query(sql, function(err, results) {
+			if (err) {
+				res.send("0");
+				throw err;
+			}
+			 
+			res.send("1");
+		})
+	}) 
+})
