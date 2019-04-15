@@ -12,6 +12,7 @@ import { TabDirective } from 'ngx-bootstrap/tabs';
 })
 export class ChiTietKhoHangComponent implements OnInit {
   id: string; // id cua kho hang
+  container_product_id; // id cua san pham trong container_product-detail
   product_id; // id cua san pham trong kho hang can chuyen kho
   formUpdateContainer: FormGroup; // form cap nhat thong tin kho hang trong thong tin co ban
   formSearchProduct: FormGroup; // Form tim kiem san pham trong tinh trang kho hang
@@ -204,6 +205,7 @@ export class ChiTietKhoHangComponent implements OnInit {
   // Chuyen san pham sang kho khac
   openModal(template: TemplateRef<any>, id_Product_Container) {
     this.modalRef = this.modalService.show(template); 
+    this.container_product_id = id_Product_Container;
     // Khoi tao form
     for (var i = 0; i < this.statusContainer.length; i++) {
       if (this.statusContainer[i].id == id_Product_Container)
@@ -245,13 +247,13 @@ export class ChiTietKhoHangComponent implements OnInit {
       .toPromise()
       .then(res => res.json())
       .then(resJson => {
-        if (resJson == "1") {
-          this.modalRef.hide();
+        if (resJson == "1") { 
           for (var i = 0; i < this.statusContainer.length; i++) {
-            if (this.statusContainer[i].id == this.product_id) {
+            if (this.statusContainer[i].id == this.container_product_id) {
               this.statusContainer[i].amount = (parseInt(this.amount) - parseInt(formMoveProduct.value.amount));
             }
           } 
+          this.modalRef.hide();
         }
         else {
           alert("Error!");
