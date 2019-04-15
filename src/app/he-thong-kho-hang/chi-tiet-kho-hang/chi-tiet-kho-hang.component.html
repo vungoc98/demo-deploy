@@ -105,7 +105,7 @@
 											<td>{{status.manufacturing_date}}</td>
 											<td>{{status.expiry_date}}</td>
 											<td>
-												<button type="button" class="btn btn-primary" (click)="openModal(template, status.code)">Chuyển kho</button> 
+												<button type="button" class="btn btn-primary" (click)="openModal(template, status.id)" *ngIf="status.amount > 0">Chuyển kho</button> 
 												<ng-template #template>
 													<div class="modal-header">
 														<h3 class="modal-title pull-left">Thông tin lưu chuyển hàng hóa</h3>
@@ -201,6 +201,7 @@
 														</form>
 												  	</div>
 												</ng-template>
+												<button type="button" disabled="" class="btn btn-danger" *ngIf="status.amount == 0">Hết hàng</button>
 											</td>
 										</tr>
 									</tbody>

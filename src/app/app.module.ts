@@ -26,6 +26,7 @@ import { TaoMoiKhoHangComponent } from './he-thong-kho-hang/tao-moi-kho-hang/tao
 import { DanhSachKhoHangComponent } from './he-thong-kho-hang/danh-sach-kho-hang/danh-sach-kho-hang.component';
 import { ChiTietKhoHangComponent } from './he-thong-kho-hang/chi-tiet-kho-hang/chi-tiet-kho-hang.component';
 import { ThongKeComponent } from './he-thong-kho-hang/thong-ke/thong-ke.component';
+import { ChiTietDonHangComponent } from './quan-ly-don-hang/chi-tiet-don-hang/chi-tiet-don-hang.component';
 const routesConfig: Routes = [
   { path: '', component: LoginComponent },  
   { path: 'register', component: RegisterComponent },
@@ -63,7 +64,7 @@ const routesConfig: Routes = [
     TaoMoiKhoHangComponent,
     DanhSachKhoHangComponent,
     ChiTietKhoHangComponent, 
-    ThongKeComponent,
+    ThongKeComponent, ChiTietDonHangComponent,
   ],
   imports: [
     FormsModule,

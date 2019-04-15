@@ -200,19 +200,19 @@ export class ChiTietKhoHangComponent implements OnInit {
   }
 
   // Chuyen san pham sang kho khac
-  openModal(template: TemplateRef<any>, code_Product) {
+  openModal(template: TemplateRef<any>, id_Product) {
     this.modalRef = this.modalService.show(template);
 
     // Khoi tao form
     for (var i = 0; i < this.statusContainer.length; i++) {
-      if (this.statusContainer[i].code == code_Product)
+      if (this.statusContainer[i].id == id_Product)
       {
         this.container_to = "";
         this.amount = this.statusContainer[i].amount;
         this.product_id = this.statusContainer[i].id;
         this.user_id = this.statusContainer[i].user_id; 
         this.formMoveProduct = this.fb.group({
-          code: code_Product,
+          code: this.statusContainer[i].code,
           name: this.statusContainer[i].name,
           amount: this.statusContainer[i].amount,
           manufacturing_date: this.statusContainer[i].manufacturing_date,

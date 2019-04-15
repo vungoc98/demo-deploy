@@ -743,7 +743,7 @@ async function thongKeKhoHang(id) {
 	amount_rest = results[0].amount_rest;
 
 	sql = `select product.code, product.name, product.image, sum(amount) as amount from container_product_detail,product 
-	where container_id = ? and product_id = product.id  group by product_id`
+	where container_id = ? and product_id = product.id and amount > 0  group by product_id`
 	sql = mysql.format(sql, id);  
 	results = await queryPromise(sql); 
 	for (var i = 0; i < results.length; i++) {
@@ -787,7 +787,7 @@ async function thongKeToanBo() {
 	amount_expiry = results[0].amount_expiry;
 
 	sql = `select product.code, product.name, product.image, sum(amount) as amount from container_product_detail,product 
-	where product_id = product.id and expiry_date >= CURDATE() group by product_id`
+	where product_id = product.id and expiry_date >= CURDATE() and amount > 0 group by product_id`
 	sql = mysql.format(sql);  
 	results = await queryPromise(sql); 
 	for (var i = 0; i < results.length; i++) {
