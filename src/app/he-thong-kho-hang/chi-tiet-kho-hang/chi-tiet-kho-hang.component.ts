@@ -100,8 +100,7 @@ export class ChiTietKhoHangComponent implements OnInit {
         for(var i = 0; i < resJson.length; i++) {
           this.statusContainer[i] = resJson[i]; 
         }
-      })
-      console.log("So luong hang hoa trong tab tinh trang kho hang: " + this.statusContainer.length);
+      }) 
       this.formSearchProduct.setValue({
         name: '',
         code: ''
@@ -121,8 +120,7 @@ export class ChiTietKhoHangComponent implements OnInit {
         for (var i = 0; i < resJson.length; i++) {
           this.containers[i] = resJson[i]; 
         }
-      })
-      console.log("So luong hang hoa trong tab lich su kho hang: " + this.containers.length);
+      }) 
       this.formSearchProduct.setValue({
         name: '',
         code: ''
@@ -144,9 +142,7 @@ export class ChiTietKhoHangComponent implements OnInit {
         this.amount_to = resJson.amount_to;
         this.amount_rest = resJson.amount_rest;
         this.products = resJson.products;  
-      }) 
-      console.log("so luong hang hoa trong tab thong ke hang hoa: " + this.products.length);
-      console.log("So luong chuyen den kho : " + this.amount_from);
+      })  
     }
   }
 
@@ -237,7 +233,7 @@ export class ChiTietKhoHangComponent implements OnInit {
     }
     // Kiem tra so luong chuyen co hop ly
     else if (formMoveProduct.value.amount > this.amount) {
-      alert("Số lượng chuyển phải nhỏ hơn " + this.amount);
+      alert("Số lượng chuyển phải <= " + this.amount);
     }
     else { 
       // Gui thong tin len server
