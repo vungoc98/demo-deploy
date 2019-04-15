@@ -1,6 +1,15 @@
+#title {
+	margin-top: 40px;
+}
+
+hr {
+	border: 1px solid black;
+}
+
 form {
 	border:1px solid gray;
-	padding: 10px;  
+	padding: 10px;
+	margin-top: 40px;
 }
 
 th, tbody {
@@ -16,18 +25,3 @@ table thead, table tbody tr {
 	width:100%; 
 	table-layout:fixed; 
 } 
-
-td {
-	line-height: 100px;
-}
-span {
-	color: blue;
-	font-size: 14px;
-}
-#xuathang {
-	width: 1200px;
-}
-
-hr {
-	border: 1px black solid;
-}

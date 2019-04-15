@@ -202,7 +202,7 @@ export class ChiTietKhoHangComponent implements OnInit {
   // Chuyen san pham sang kho khac
   openModal(template: TemplateRef<any>, id_Product) {
     this.modalRef = this.modalService.show(template);
-
+    console.log("id: " + id_Product);
     // Khoi tao form
     for (var i = 0; i < this.statusContainer.length; i++) {
       if (this.statusContainer[i].id == id_Product)

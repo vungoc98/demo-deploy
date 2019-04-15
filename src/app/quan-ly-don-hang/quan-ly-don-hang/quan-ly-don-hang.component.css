@@ -1,7 +1,7 @@
-form {
-	border:1px solid gray;
-	padding: 10px;  
-}
+.search {
+	height: 33px; 
+	width: 250px;
+} 
 
 th, tbody {
 	text-align: center;
@@ -15,19 +15,21 @@ table thead, table tbody tr {
 	display:table; 
 	width:100%; 
 	table-layout:fixed; 
-} 
-
-td {
-	line-height: 100px;
-}
-span {
-	color: blue;
-	font-size: 14px;
-}
-#xuathang {
-	width: 1200px;
 }
 
-hr {
-	border: 1px black solid;
+form {
+	border:1px solid gray;
+	padding: 10px;
+	margin-top: 40px;
+}
+
+ 
+
+h2 {
+	text-align: center;
+	color: red;
+}
+
+.tab {
+	margin-top: 50px;
 }

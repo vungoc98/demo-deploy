@@ -128,6 +128,8 @@ app.post('/register', jsonParser, (req, res) => {
 		 
 	}) 
 })
+// Ket thuc dang nhap - dang ky
+
 // I. NHA PHAN PHOI
 // 1. He thong san pham
 // 1.1. Tao moi san pham
@@ -370,8 +372,9 @@ app.post('/updateProduct_Category', jsonParser, (req, res) => {
 	}) 
 })
 
-// II. He thong kho hang
+// Ket thuc he thong san pham
 
+// II. He thong kho hang
 // 2.1. Tao moi kho hang 
 app.post('/createContainer', jsonParser, (req, res) => { 
 	// ngay hien tai => tuong duong voi ngay tao thong tin
@@ -807,3 +810,483 @@ app.get('/thongketoanbo', async function(req, res) {
 	ketquathongketoanbo.products =array_product_TKTB;   
 	res.send(ketquathongketoanbo);  
 })
+
+// Ket thuc he thong kho hang
+
+// III. Quan ly don hang
+//1. Tao don nhap hang
+// Lay thong tin nha cung cap
+provider= require('./provider.js');
+providers = new Array();
+product_types = "";
+app.get('/getProvidersInfo', (req, res) => {
+	set_id = new Set();
+	var sql = `select distinct user1.id, product_category.name as product_type, user1.name, user1.code,
+	user1.address, user1.mobile, user1.email from user1, provider_product,product_category, 
+	product where user1.id = provider_product.user_id and product.id = provider_product.product_id 
+	and product.product_category_id = product_category.id`;
+	con.query(sql, function(err, results) {
+		k = 0;
+		if (err) throw err; 
+		for (var i = 0; i < results.length; i++) {
+			set_id.add(results[i].id);
+		}
+		for (var i of set_id) {  
+			var user; // Chua chi so tuong ung voi results 
+			product_types = ""; 
+			for (var j = 0; j < results.length ; j++) {  
+				if (i == results[j].id) { 
+					product_types += results[j].product_type + ", "; 
+					user = j;
+				} 
+			}  
+			if (product_types.charAt(product_types.length - 2) == ",") { 
+				product_types = product_types.substr(0, product_types.length - 2);
+			}
+			pro = new provider(results[user].id, product_types, results[user].name, results[user].code, 
+						results[user].address, results[user].mobile, results[user].email); 
+			providers[k] = pro; 
+			k++;
+		}  
+		res.send(providers);
+	}) 
+})
+
+// Lay danh sach hang hoa cua nha cung cap
+provider_product = require('./provider_product.js');
+provider_products = new Array();
+
+app.post('/getProviderProducts', jsonParser, (req, res)=> {
+	provider_products.splice(0, provider_products.length);
+	var sql; 
+	// Chua chon nha cung cap nhung da xem san pham
+	if(req.body.user_id == undefined) {
+		sql = `select product.id, code, name, description, image, price, manufacturing_date, expiry_date
+		 from product, provider_product, container_product_detail where user_id = 0 and provider_product.product_id = product.id
+		 and product.dele = 0 and provider_product.dele = 0`;
+	}
+
+	// Da chon nha cung cap sau do moi lua chon san pham
+	else {
+		sql = `select product.id, code, name, description, image, price from product, provider_product
+		 	where user_id = ? and provider_product.product_id = product.id and product.dele = 0 and provider_product.dele = 0`;
+		sql = mysql.format(sql, req.body.user_id);
+	} 
+	con.query(sql, function(err, results) {
+		if (err) throw err;
+		for (var i = 0; i < results.length; i++) {
+			pro_pro = new provider_product(results[i].id, results[i].code, results[i].name, results[i].description,
+				results[i].image, results[i].price, false);
+			provider_products[i] = pro_pro; 
+		}
+		res.send(provider_products);
+	})
+	 
+})
+
+// Tim kiem hang hoa phuc vu qua trinh nhap hang cua nha phan phoi
+app.post('/searchProviderProducts', jsonParser, (req, res)=> {
+	provider_products.splice(0, provider_products.length);
+	var sql;
+	// Chua chon nha cung cap
+	if(req.body.user_id == undefined) {
+		sql = `select product.id, code, name, description, image, price from product, provider_product
+		 	where user_id = 0 and provider_product.product_id = product.id and product.dele = 0 and provider_product.dele = 0`;
+	}
+	// Khong tim kiem
+	else if (req.body.name.trim() == "" && req.body.code.trim() == "") {
+		sql = `select product.id, code, name, description, image, price from product, provider_product
+		 	where user_id = ? and provider_product.product_id = product.id and product.dele = 0 and provider_product.dele = 0`;
+		 	sql = mysql.format(sql, [req.body.user_id]);
+	}
+	// Tim kiem theo ten
+	else if (req.body.name.trim() != "" && req.body.code.trim() == ""){
+		sql = `select product.id, code, name, description, image, price from product, provider_product
+		 	where user_id = ? and provider_product.product_id = product.id and name like ? and product.dele = 0 and provider_product.dele = 0`;
+		 	sql = mysql.format(sql, [req.body.user_id, "%" +  req.body.name.trim() + "%"]);
+	}
+	// Tim kiem theo ma
+	else if (req.body.name.trim() == "" && req.body.code.trim() != ""){
+		sql = `select product.id, code, name, description, image, price from product, provider_product
+		 	where user_id = ? and provider_product.product_id = product.id and code like ? and product.dele = 0 and provider_product.dele = 0`;
+		 	sql = mysql.format(sql, [req.body.user_id, "%" +  req.body.code.trim() + "%"]);
+	}
+	// Tim kiem theo ca ten va ma
+	else {
+		sql = `select product.id, code, name, description, image, price from product, provider_product
+		 	where user_id = ? and provider_product.product_id = product.id and code = ? and name = ? and product.dele = 0 and provider_product.dele = 0`;
+		 	sql = mysql.format(sql, [req.body.user_id, req.body.code.trim(), req.body.name.trim()]);
+	}
+	con.query(sql, function(err, results) {
+		if (err) throw err;
+		for (var i = 0; i < results.length; i++) {
+			pro_pro = new provider_product(results[i].id, results[i].code, results[i].name, results[i].description,
+				results[i].image, results[i].price, false);
+			provider_products[i] = pro_pro; 
+		}
+		res.send(provider_products);
+	})
+	 
+})
+
+//Them thong tin don nhap hang vao co so du lieu
+/*
+* Buoc 1: Them thong tin tong quat vao bang orders
+* Buoc 2: Them chi tiet cac san pham vao bang order_detail
+* Buoc 3: Them chi tiet cac san pham vao bang container_product_detail
+*/
+var moment = require('moment');
+app.post('/createOrder', jsonParser, function(req, res) {
+	// Buoc1: Them thong tin tong quat vao bang order
+	// Tao ma code cho don hang
+	var rdmCode = "";
+	for( ; rdmCode.length < 6; rdmCode  += Math.random().toString(36).substr(2));
+	var code = "ORDER_" + rdmCode.substr(0, 6);
+	var sql = "insert into orders(code, user_id, price_total, amount_total, order_date, import_date, status) values (?,?,?,?,?,?,?)";
+	sql = mysql.format(sql, [code, req.body.user_id, req.body.price_total, req.body.amount_total, req.body.order_date, 
+		req.body.import_date, "Đã giao"]);
+	// console.log(sql);
+	con.query(sql, function(err, results) {
+		if (err) {
+			res.send("0");
+			throw err;
+		}
+		sql = "select Max(id) as order_id from orders";
+		con.query(sql, function(err, results1) {
+			if (err) {
+				res.send("0");
+				throw err;
+			}
+
+			// Buoc 2 + 3: Them chi tiet cac san pham vao bang order_detail va bang container_product_detail
+			// Mac dinh ngay san xuat = ngay nhap hang, han su dung = ngay nhap hang + 1 thang
+			// console.log("length: " + req.body.products.length);
+			for (var i = 0; i < req.body.products.length; i++) {
+				sql = `insert into order_detail(order_id, product_id, amount, price, manufacturing_date, expiry_date)
+				value (?, ?, ?, ?, ?, ?)`;
+				sql = mysql.format(sql, [results1[0].order_id, req.body.products[i].id,
+					req.body.products[i].amount, req.body.products[i].prices, 
+					req.body.import_date, (moment(new Date(req.body.import_date)).add(1, 'months')).format("YYYY-MM-DD")]);  
+			 
+				con.query(sql, function(err, results2) {
+					if (err) {
+						res.send("0");
+						throw err;
+					}
+				})
+				// Bang container_product_detail
+				var sql_container_product_detail = `insert into container_product_detail(product_id, container_id, 
+				user_id, amount, manufacturing_date, expiry_date) values (?, ?, ?, ?, ?, ?)`;
+				sql_container_product_detail = mysql.format(sql_container_product_detail, [req.body.products[i].id,
+					1, req.body.user_id, req.body.products[i].amount, req.body.import_date, 
+					(moment(new Date(req.body.import_date)).add(1, 'months')).format("YYYY-MM-DD")]);   
+				con.query(sql_container_product_detail, function(err, results3) {
+					if (err) {
+						res.send("0");
+						throw err;
+					}
+				})
+			}
+		})
+		res.send("1");
+	}) 
+}) 
+
+// 3.2. Quan ly don hang 
+// Lay thong tin tong quat don nhap hang, xuat hang trong bang orders
+app.get('/getOrderImportInfo', function(req, res) {
+	var sql = `select orders.id, orders.code, name, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date,  
+		date_format(import_date, '%d-%m-%Y') as import_date, orders.status 
+		from orders, user1 where orders.user_id = user1.id and acount_type = ?`;
+	sql = mysql.format(sql, "Nhà cung cấp");
+	con.query(sql, function(err, results) {
+		if (err) throw err;
+		res.send(results);
+	})
+})
+app.get('/getOrderExportInfo', function(req, res) {
+	var sql = `select orders.id, orders.code, name, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date, orders.status,
+		date_format(export_date, '%d-%m-%Y') as export_date, orders.status, date_format(orders.update_date, '%d-%m-%Y') as update_date,
+		reason from orders, user1 where orders.user_id = user1.id and acount_type = ?`;
+	sql = mysql.format(sql, "Siêu thị");
+	con.query(sql, function(err, results) {
+		if (err) throw err;
+		res.send(results);
+	})
+})
+
+// Xem thong tin chi tiet don hang boi id
+app.post('/getOrderInfoById', jsonParser, function(req, res) {
+	if (req.body.order_type == "donnhaphang") {
+		var sql = `select orders.id, orders.code as order_code, user1.name, user1.code, 
+		user1.address, user1.mobile, user1.email, amount_total, price_total, date_format(import_date, '%d-%m-%Y') as import_date,
+		date_format(order_date, '%d-%m-%Y') as order_date, orders.status 
+		from orders, user1 where orders.user_id = user1.id and orders.id = ?`; 
+	}
+	else {
+		var sql = `select orders.id, orders.code as order_code, user1.name, user1.code,
+		user1.address, user1.mobile, user1.email, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date,  
+		date_format(export_date, '%d-%m-%Y') as import_date, orders.status
+		from orders, user1 where orders.user_id = user1.id and orders.id = ?`; 
+	}
+	sql = mysql.format(sql, req.body.id);
+	con.query(sql, function(err, results) {
+		if (err) throw err; 
+		res.send(results);
+	})
+})
+
+app.post('/getOrderProducts', jsonParser, function(req, res) {
+	var sql = `select product.id, product.code, product.name, product.image, amount, date_format(manufacturing_date, '%d-%m-%Y') as manufacturing_date,
+		date_format(expiry_date, '%d-%m-%Y') as expiry_date, order_detail.price from product, order_detail where product.id = order_detail.product_id 
+		and order_id = ? order by product.id asc`;
+	sql = mysql.format(sql, req.body.id);
+	con.query(sql, function(err, results) {
+		if (err) throw err;
+		res.send(results);
+	})
+})
+
+// Tim kiem don hang
+/* Truong hop 1: Nguoi dung chi nhap ma don hang => tim kiem gan dung
+* Truong hop 2: Nguoi dung chi nhap ten (nha cung cap hoac sieu thi) => tim kiem gan dung
+* Truong hop 3: Nguoi dung nhap ca ma va ten => tim kiem chinh xac
+*  Truong hop 4: Con lai => Hien thi het don hang
+*/ 
+app.post('/searchOrder', jsonParser, function(req, res) {
+	var sql;
+	// Truong hop 1: Chi nhap ma don hang
+	if (req.body.code.trim() != "" && req.body.name.trim() == "") {
+		// Neu la don nhap hang
+		if (req.body.order_type == "nhaphang") {
+			sql = `select orders.id, orders.code, name, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date,  
+				date_format(import_date, '%d-%m-%Y') as import_date, reason,
+				date_format(orders.update_date, '%d-%m-%Y') as update_date from orders, user1 
+				where orders.user_id = user1.id and acount_type = ? and orders.code like ?`;
+			sql = mysql.format(sql, ["Nhà cung cấp", "%" + req.body.code.trim() + "%"]);
+			con.query(sql, function(err, results) {
+				if (err) throw err;
+				res.send(results);
+			})
+		}
+		// Neu la don dat hang
+		if (req.body.order_type == "dathang") {
+			sql = `select orders.id, orders.code, name, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date,  
+				date_format(export_date, '%d-%m-%Y') as export_date, orders.status, reason,
+				date_format(orders.update_date, '%d-%m-%Y') as update_date from orders, user1 
+				where orders.user_id = user1.id and acount_type = ? and orders.code like ?`;
+			sql = mysql.format(sql, ["Siêu thị", "%" + req.body.code.trim() + "%"]);
+			con.query(sql, function(err, results) {
+				if (err) throw err;
+				res.send(results);
+			})
+		}
+	}
+
+	// Truong hop 2: Chi nhap ten 
+	else if (req.body.code.trim() == "" && req.body.name.trim() != "") {
+		 // Neu la don nhap hang
+		if (req.body.order_type == "nhaphang") {
+			sql = `select orders.id, orders.code, name, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date,  
+				date_format(import_date, '%d-%m-%Y') as import_date, reason,
+				date_format(orders.update_date, '%d-%m-%Y') as update_date from orders, user1 
+				where orders.user_id = user1.id and acount_type = ? and name like ?`;
+			sql = mysql.format(sql, ["Nhà cung cấp", "%" + req.body.name.trim() + "%"]);
+			con.query(sql, function(err, results) {
+				if (err) throw err;
+				res.send(results);
+			})
+		}
+		// Neu la don dat hang
+		if (req.body.order_type == "dathang") {
+			sql = `select orders.id, orders.code, name, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date,  
+				date_format(export_date, '%d-%m-%Y') as export_date, orders.status, reason,
+				date_format(orders.update_date, '%d-%m-%Y') as update_date from orders, user1 
+				where orders.user_id = user1.id and acount_type = ? and name like ?`;
+			sql = mysql.format(sql, ["Siêu thị", "%" + req.body.name.trim() + "%"]);
+			con.query(sql, function(err, results) {
+				if (err) throw err;
+				res.send(results);
+			})
+		}
+	}
+
+	// Truong hop 3 : Nhap ca code va name
+	else if (req.body.code.trim() != "" && req.body.name.trim() != "") {
+		// Neu la don nhap hang
+		if (req.body.order_type == "nhaphang") {
+			sql = `select orders.id, orders.code, name, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date,  
+				date_format(import_date, '%d-%m-%Y') as import_date, reason,
+				date_format(orders.update_date, '%d-%m-%Y') as update_date from orders, user1 
+				where orders.user_id = user1.id and acount_type = ? and name = ? and orders.code = ?`;
+			sql = mysql.format(sql, ["Nhà cung cấp", req.body.name.trim(), req.body.code.trim()]);
+			con.query(sql, function(err, results) {
+				if (err) throw err;
+				res.send(results);
+			})
+		}
+		// Neu la don dat hang
+		if (req.body.order_type == "dathang") {
+			sql = `select orders.id, orders.code, name, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date,  
+				date_format(export_date, '%d-%m-%Y') as export_date, orders.status, reason,
+				date_format(orders.update_date, '%d-%m-%Y') as update_date from orders, user1 
+				where orders.user_id = user1.id and acount_type = ? and name = ? and orders.code = ?`;
+			sql = mysql.format(sql, ["Siêu thị", req.body.name.trim(), req.body.code.trim()]);
+			con.query(sql, function(err, results) {
+				if (err) throw err;
+				res.send(results);
+			})
+		}
+	}
+
+	// Truong hop 4: khong nhap gi ca
+	else {
+		// Neu la don nhap hang
+		if (req.body.order_type == "nhaphang") {
+			sql = `select orders.id, orders.code, name, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date,  
+				date_format(import_date, '%d-%m-%Y') as import_date, reason,
+				date_format(orders.update_date, '%d-%m-%Y') as update_date from orders, user1 
+				where orders.user_id = user1.id and acount_type = ? `;
+			sql = mysql.format(sql, ["Nhà cung cấp"]);
+			con.query(sql, function(err, results) {
+				if (err) throw err;
+				res.send(results);
+			})
+		}
+		// Neu la don dat hang
+		if (req.body.order_type == "dathang") {
+			sql = `select orders.id, orders.code, name, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date,  
+				date_format(export_date, '%d-%m-%Y') as export_date, orders.status, reason,
+				date_format(orders.update_date, '%d-%m-%Y') as update_date from orders, user1 
+				where orders.user_id = user1.id and acount_type = ? `;
+			sql = mysql.format(sql, ["Siêu thị"]); 
+			con.query(sql, function(err, results) {
+				if (err) throw err;
+				res.send(results);
+			})
+		}
+	}
+	 
+})
+
+// Xac nhan don hang
+app.post('/confirmOrderId', jsonParser, function(req, res) {
+	// ngay hien tai => tuong duong voi ngay cap nhat thong tin
+	var update_date = (new Date()).getFullYear() + "-" + ((new Date()).getMonth() + 1) + "-" + ((new Date()).getDate());
+	var sql = "update orders set status = ?, update_date = ? where id = ?";
+	sql = mysql.format(sql, ["Chờ thanh toán", update_date, req.body.id]);
+	con.query(sql, function(err, results) {
+		if (err) {
+			res.send('0');
+			throw err;
+		} 
+		if (results.changedRows == 1) {
+			res.send('1');
+		} 
+		else {
+			res.send('0');
+		}
+	})
+})
+
+// Huy don hang
+app.post('/cancelOrderId', jsonParser, function(req, res) {
+	// ngay hien tai => tuong duong voi ngay cap nhat thong tin
+	var update_date = (new Date()).getFullYear() + "-" + ((new Date()).getMonth() + 1) + "-" + ((new Date()).getDate());
+	var sql = "update orders set status = ?, update_date = ?, reason =? where id = ?";
+	sql = mysql.format(sql, ["Bị hủy", update_date, req.body.reason, req.body.id]);
+	con.query(sql, function(err, results) {
+		if (err) {
+			res.send('0');
+			throw err;
+		} 
+		if (results.changedRows == 1) {
+			res.send('1');
+		} 
+		else {
+			res.send('0');
+		}
+	})
+})
+
+// Xuat don hang 
+app.post('/exportOrderId', jsonParser, async function(req, res) {
+	array_object_container_products = new Array();
+	containers = await queryPromise("select id, name from container") ;
+	var k = 0;
+	for (i = 0; i < containers.length; i++) {
+		container_products = new Object();  
+		var sql = `select container_id, product.code, product.name, order_detail.amount as soluongnhap, 
+			sum(container_product_detail.amount) as soluongconhan from orders, order_detail, product, 
+			container_product_detail where orders.id = ? and orders.id = order_detail.order_id and 
+			product.id = order_detail.product_id and order_detail.product_id = container_product_detail.product_id 
+			and container_product_detail.expiry_date > date(date_add(curdate(), interval 7 day)) 
+			and container_product_detail.container_id = ?
+			group by container_product_detail.product_id, container_product_detail.container_id`;
+		sql = mysql.format(sql, [req.body.id, containers[i].id]); 
+		order_products = await queryPromise(sql); 
+		if (order_products.length > 0) { 
+			container_products.container = containers[i];
+			container_products.products = order_products;
+			array_object_container_products[k] = container_products; 
+			k++;
+		}
+		  
+	}   
+	res.send(array_object_container_products);
+})
+
+// Chon kho hang de xuat hang
+app.post('/chooseContainerExport', jsonParser, function(req, res) {
+	// ngay hien tai => tuong duong voi ngay cap nhat thong tin
+	var update_date = (new Date()).getFullYear() + "-" + ((new Date()).getMonth() + 1) + "-" + ((new Date()).getDate());
+	// Lay danh sach san pham cua don hang trong container_product_detail
+	// sap xep theo chieu tang dan ngay het han de lua chon hang hoa xuat
+	var sql = ` select container_product_detail.id, container_product_detail.product_id, 
+	container_product_detail.amount, container_product_detail.expiry_date 
+	from container_product_detail, orders, order_detail 
+	where orders.id = order_detail.order_id and 
+	order_detail.product_id = container_product_detail.product_id and 
+	orders.id = ? and 
+	container_product_detail.expiry_date > date(date_add(curdate(), interval 7 day)) and 
+	container_id = ? order by container_product_detail.product_id asc, container_product_detail.expiry_date asc`;
+	sql = mysql.format(sql, [req.body.order_id, req.body.container_id]);
+	con.query(sql, async function(err, results) {
+		if (err) {
+			res.send('0');
+			throw err;
+		}
+		var i = 0, j = 0;
+		for (i = 0; i < req.body.order_products.length; i++) { 
+			var amount_order = parseInt(req.body.order_products[i].amount); 
+			for (j = 0; j < results.length; j++) {  
+				if ((req.body.order_products[i].id == results[j].product_id) && (amount_order <= parseInt(results[j].amount))) { 
+					sql = `update container_product_detail set amount = ?, update_date = ? where 
+						container_product_detail.id = ?`
+					sql = mysql.format(sql, [parseInt(results[j].amount) - parseInt(amount_order), 
+						update_date, results[j].id]);
+					resu = await queryPromise(sql);
+					sql = `update orders set status = ? where 
+						orders.id = ?`
+					sql = mysql.format(sql, ['Đã giao', req.body.order_id]);
+					resu_orders = await queryPromise(sql);
+					break;
+				}
+				else if ((req.body.order_products[i].id == results[j].product_id) && (amount_order > parseInt(results[j].amount))) { 
+					sql = `update container_product_detail set amount = ?, update_date = ? where 
+						container_product_detail.id = ?`
+					sql = mysql.format(sql, [0, update_date, results[j].id]);
+					resu = await queryPromise(sql); 
+					amount_order = parseInt(amount_order) - parseInt(results[j].amount)
+				}
+			}
+		}
+		if (i == req.body.order_products.length) {
+			res.send('1');
+		}
+		else {
+			res.send('0');
+		}
+	})
+})
+// Ket thuc quan ly don hang

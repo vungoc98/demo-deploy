@@ -27,6 +27,8 @@ import { DanhSachKhoHangComponent } from './he-thong-kho-hang/danh-sach-kho-hang
 import { ChiTietKhoHangComponent } from './he-thong-kho-hang/chi-tiet-kho-hang/chi-tiet-kho-hang.component';
 import { ThongKeComponent } from './he-thong-kho-hang/thong-ke/thong-ke.component';
 import { ChiTietDonHangComponent } from './quan-ly-don-hang/chi-tiet-don-hang/chi-tiet-don-hang.component';
+import { QuanLyDonHangComponent } from './quan-ly-don-hang/quan-ly-don-hang/quan-ly-don-hang.component';
+import { TaoDonNhapHangComponent } from './quan-ly-don-hang/tao-don-nhap-hang/tao-don-nhap-hang.component';
 const routesConfig: Routes = [
   { path: '', component: LoginComponent },  
   { path: 'register', component: RegisterComponent },
@@ -46,6 +48,12 @@ const routesConfig: Routes = [
   { path: 'hethongkhohang/danhsachkhohang', component: DanhSachKhoHangComponent },
   { path: 'hethongkhohang/danhsachkhohang/chitietkhohang/:id', component: ChiTietKhoHangComponent },  
   { path: 'hethongkhohang/thongke', component: ThongKeComponent },
+  
+  // 1.3. Quan ly don hang
+  { path: 'quanlydonhang/taodonnhaphang', component: TaoDonNhapHangComponent },
+  { path: 'quanlydonhang/nhap_hang_dat_hang', component: QuanLyDonHangComponent },
+  { path: 'quanlydonhang/:name/xemchitiet/:id', component: ChiTietDonHangComponent },
+  
 ]
 
 @NgModule({
@@ -64,7 +72,7 @@ const routesConfig: Routes = [
     TaoMoiKhoHangComponent,
     DanhSachKhoHangComponent,
     ChiTietKhoHangComponent, 
-    ThongKeComponent, ChiTietDonHangComponent,
+    ThongKeComponent, ChiTietDonHangComponent, QuanLyDonHangComponent, TaoDonNhapHangComponent,
   ],
   imports: [
     FormsModule,
