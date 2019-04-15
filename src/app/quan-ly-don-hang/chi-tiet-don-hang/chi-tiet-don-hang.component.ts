@@ -12,8 +12,8 @@ export class ChiTietDonHangComponent implements OnInit {
 
   @Input() type_account: string;
   id: string; //
-  private donNhapHang: boolean;
-  private donDatHang: boolean;
+  public donNhapHang: boolean;
+  public donDatHang: boolean;
   order_type: string; // Loai don hang (don nhap hang hay don dat hang)
 
   // Thong tin don hang:
