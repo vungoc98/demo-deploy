@@ -18,6 +18,10 @@ import { DanhSachHangHoaComponent } from './he-thong-san-pham/danh-sach-hang-hoa
 import { CapNhatSanPhamComponent } from './he-thong-san-pham/cap-nhat-san-pham/cap-nhat-san-pham.component';
 import { DanhSachNhomHangHoaComponent } from './he-thong-san-pham/danh-sach-nhom-hang-hoa/danh-sach-nhom-hang-hoa.component';
 import { CapNhatNhomHangHoaComponent } from './he-thong-san-pham/cap-nhat-nhom-hang-hoa/cap-nhat-nhom-hang-hoa.component';
+import { TaoMoiKhoHangComponent } from './he-thong-kho-hang/tao-moi-kho-hang/tao-moi-kho-hang.component';
+import { DanhSachKhoHangComponent } from './he-thong-kho-hang/danh-sach-kho-hang/danh-sach-kho-hang.component';
+import { ChiTietKhoHangComponent } from './he-thong-kho-hang/chi-tiet-kho-hang/chi-tiet-kho-hang.component';
+import { ThongKeComponent } from './he-thong-kho-hang/thong-ke/thong-ke.component';
 const routesConfig: Routes = [
   { path: '', component: LoginComponent },  
   { path: 'register', component: RegisterComponent },
@@ -31,6 +35,13 @@ const routesConfig: Routes = [
   { path: 'hethongsanpham/danhsachsanpham/capnhatsanpham/:id', component: CapNhatSanPhamComponent },
   { path: 'hethongsanpham/hethongnhomsanpham', component: DanhSachNhomHangHoaComponent },
   { path: 'hethongsanpham/hethongnhomsanpham/capnhatnhomsanpham/:name', component: CapNhatNhomHangHoaComponent},
+
+   // 1.2. He thong kho hang
+  { path: 'hethongkhohang/taomoikhohang', component: TaoMoiKhoHangComponent },
+  { path: 'hethongkhohang/danhsachkhohang', component: DanhSachKhoHangComponent },
+  { path: 'hethongkhohang/danhsachkhohang/chitietkhohang/:id', component: ChiTietKhoHangComponent }, 
+  { path: 'hethongkhohang/danhsachkhohang/chitietkhohang/:id/tinhtrangkhohang/:code', component: ChuyenKhoHangComponent }, 
+  { path: 'hethongkhohang/thongke', component: ThongKeComponent },
 ]
 
 @NgModule({
@@ -46,6 +57,10 @@ const routesConfig: Routes = [
     CapNhatSanPhamComponent,
     DanhSachNhomHangHoaComponent,
     CapNhatNhomHangHoaComponent,
+    TaoMoiKhoHangComponent,
+    DanhSachKhoHangComponent,
+    ChiTietKhoHangComponent, 
+    ThongKeComponent,
   ],
   imports: [
     FormsModule,
