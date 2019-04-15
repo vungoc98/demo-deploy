@@ -3,6 +3,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Http, Headers } from '@angular/http';
+import { TabDirective } from 'ngx-bootstrap/tabs';
 
 @Component({
   selector: 'app-chi-tiet-kho-hang',
@@ -68,9 +69,9 @@ export class ChiTietKhoHangComponent implements OnInit {
   }
 
 
-  async chiTietKhoHang(tab: string) {
+  async chiTietKhoHang(tab: TabDirective) {
     console.log("Vao day");
-    if (tab == "thongtincoban") {
+    if (tab.heading == "Thông tin cơ bản") {
       // Lay thong tin kho hang co id = this.id
       const url = "/getContainerInfo";
       const headers = new Headers({ 'Content-Type': 'application/json' });
@@ -88,7 +89,7 @@ export class ChiTietKhoHangComponent implements OnInit {
       })
     }
     // tinh trang kho hang
-    else if (tab == "tinhtrangkhohang") {
+    else if (tab.heading == "Tình trạng kho hàng") {
       this.statusContainer.splice(0, this.statusContainer.length);
       // Tinh trang kho hang co id = this.id
       const url = "/statusContainer";
@@ -110,7 +111,7 @@ export class ChiTietKhoHangComponent implements OnInit {
     }
 
     // lich su kho hang
-    else if (tab == "lichsukhohang") {
+    else if (tab.heading == "Lịch sử kho hàng") {
       this.containers.splice(0, this.containers.length);
       const url = "/getContainerLog";
       const headers = new Headers({ 'Content-Type': 'application/json' });
@@ -131,7 +132,7 @@ export class ChiTietKhoHangComponent implements OnInit {
     }
 
     // thong ke kho hang
-    else if (tab == "thongkekhohang") {
+    else if (tab.heading == "Thống kê kho hàng") {
       this.products.splice(0, this.products.length);
       const url = "/thongKeKhoHang";
       const headers = new Headers( {'Content-Type': 'application/json' });

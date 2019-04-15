@@ -14,7 +14,7 @@
 			</div>  
 			<div>
 			  <tabset [justified]="true">
-			    <tab heading="Thông tin cơ bản" id="tab1" (selectTab)="chiTietKhoHang('thongtincoban');">
+			    <tab heading="Thông tin cơ bản" id="tab1" (selectTab)="chiTietKhoHang($event);">
 			    	<div class="tab">
 						<form (ngSubmit)="onSubmitUpdate(formUpdateContainer);" [formGroup]="formUpdateContainer">
 							<div class="form-group">
@@ -64,7 +64,7 @@
 						</form>	  
 					</div>
 			    </tab>
-			    <tab heading="Tình trạng kho hàng" (select)="chiTietKhoHang('tinhtrangkhohang');">
+			    <tab heading="Tình trạng kho hàng" (selectTab)="chiTietKhoHang($event);">
 			    	<div class="tab">
 				    	<form (ngSubmit)="onSubmitTinhTrangKhoHang(formSearchProduct);" [formGroup]="formSearchProduct">
 							<!-- Chua cac thanh tim kiem san pham theo ten, ma san pham -->
@@ -209,7 +209,7 @@
 						</form>
 					</div>
 			    </tab>
-			    <tab heading="Lịch sử kho hàng" (select)="chiTietKhoHang('lichsukhohang');">
+			    <tab heading="Lịch sử kho hàng" (selectTab)="chiTietKhoHang($event);">
 			    	<div class="tab">
 			    		<form (ngSubmit)="onSubmitLichSuKhoHang(formSearchProduct);" [formGroup]="formSearchProduct">
 						<!-- Chua cac thanh tim kiem san pham theo ten, ma san pham -->
@@ -261,7 +261,7 @@
 					</form>''
 			    	</div>
 			    </tab> 
-			    <tab heading="Thống kê kho hàng"(select)="chiTietKhoHang('thongkekhohang');">
+			    <tab heading="Thống kê kho hàng"(selectTab)="chiTietKhoHang($event);">
 			    	<div class="form-group" style="margin-top: 30px;"> 
 			    		<h4><b>Thông tin tổng quát</b></h4>
 			    		<br>
