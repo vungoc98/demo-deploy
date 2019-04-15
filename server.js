@@ -497,7 +497,7 @@ app.post('/statusContainer', jsonParser, (req, res) => {
 	sql = mysql.format(sql, req.body.id);
 	con.query(sql, function(err, results) {
 		if (err) throw err; 
-		res.send(products);
+		res.send(results);
 	})
 })
 
