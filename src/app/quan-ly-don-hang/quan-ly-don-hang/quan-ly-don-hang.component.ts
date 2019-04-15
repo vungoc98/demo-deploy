@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Http, Headers } from '@angular/http';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { TabDirective } from 'ngx-bootstrap/tabs';
 @Component({
   selector: 'app-quan-ly-don-hang',
   templateUrl: './quan-ly-don-hang.component.html',
@@ -56,14 +57,15 @@ export class QuanLyDonHangComponent implements OnInit {
   }
 
   // Tim loai don hang => hien giao dien tuong ung
-  async select(type: string) { 
-    this.order_type = type;
+  async select(type: TabDirective) {  
     this.current_page = 1;
     var url;
-    if (this.order_type == "nhaphang") {
+    if (type.heading == "Đơn nhập hàng") {
+      this.order_type = "nhaphang";
       url = "/getOrderImportInfo";
     }
     else {
+      this.order_type = "dathang";
       url = "/getOrderExportInfo";
     }
     var headers = new Headers( {'Content-Type': 'application/json' });
@@ -71,12 +73,14 @@ export class QuanLyDonHangComponent implements OnInit {
     .toPromise()
     .then(res => res.json())
     .then(resJson => { 
-      if (this.order_type == "nhaphang") {
+      if (type.heading == "Đơn đặt hàng") {
+        this.order_type = "dathang";
         this.listOrderImport = resJson;
       }
       else this.listOrderExport = resJson;
     })
-    if (this.order_type == "nhaphang") {
+    if (type.heading == "Đơn nhập hàng") {
+      this.order_type = "nhaphang";
       // Kiem tra so luong don  hang co du lon de hien thi trang
       if (this.listOrderImport.length > this.number) this.display_pages = true; 
       for (var i = 0; i < this.number && i < this.listOrderImport.length; i++) {

@@ -97,10 +97,12 @@ export class ChiTietKhoHangComponent implements OnInit {
       .toPromise()
       .then(res => res.json())
       .then(resJson => {
-        for(var i = 0; i < resJson.length; i++) {
-          this.statusContainer[i] = resJson[i]; 
-        }
+        console.log("tinh trang kho hang: " + resJson.length);
+        this.statusContainer = resJson;
       }) 
+      for (var i = 0 ; i < this.statusContainer.length; i++) {
+        console.log("statusContainer: " + this.statusContainer[i]);
+      }
       this.formSearchProduct.setValue({
         name: '',
         code: ''

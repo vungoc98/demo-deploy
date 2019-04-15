@@ -13,7 +13,7 @@
 			</div> 
 			<div>
 			  	<tabset [justified]="true">
-			    	<tab heading="Đơn nhập hàng" (select) ="select('nhaphang');">
+			    	<tab heading="Đơn nhập hàng" (selectTab) ="select($event);">
 				    	<div class="tab">
 					    	<form [formGroup]="formSearch" (ngSubmit)="searchOrder(formSearch);">
 								<!-- Chua cac thanh tim kiem don hang -->
@@ -75,7 +75,7 @@
 							</form>
 						</div>
 			    	</tab>
-				    <tab heading="Đơn đặt hàng" (select) ="select('dathang');">
+				    <tab heading="Đơn đặt hàng" (selectTab) ="select($event);">
 				    	<div class="tab">
 					    	<form [formGroup]="formSearch" (ngSubmit)="searchOrder(formSearch);">
 								<!-- Chua cac thanh tim kiem don hang -->
