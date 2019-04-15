@@ -491,7 +491,7 @@ app.post('/updateContainerInfo', jsonParser, (req, res) => {
 // 2.3.2. Tinh trang kho hang
 app.post('/statusContainer', jsonParser, (req, res) => {
 	products.splice(0, products.length);
-	var sql = `select distinct product.id, product.code, user_id, product.name, amount, date_format(manufacturing_date, '%d-%m-%Y') as manufacturing_date,
+	var sql = `select distinct container_product_detail.id, product.code, user_id, product.name, amount, date_format(manufacturing_date, '%d-%m-%Y') as manufacturing_date,
 	 date_format(expiry_date, '%d-%m-%Y') as expiry_date from product, 
 	 container_product_detail where product.id = container_product_detail.product_id and container_product_detail.container_id = ?`;
 	sql = mysql.format(sql, req.body.id);
