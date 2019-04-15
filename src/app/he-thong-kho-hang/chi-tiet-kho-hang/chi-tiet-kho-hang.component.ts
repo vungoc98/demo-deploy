@@ -200,16 +200,15 @@ export class ChiTietKhoHangComponent implements OnInit {
   }
 
   // Chuyen san pham sang kho khac
-  openModal(template: TemplateRef<any>, id_Product) {
-    this.modalRef = this.modalService.show(template);
-    console.log("id: " + id_Product);
+  openModal(template: TemplateRef<any>, id_Product_Container) {
+    this.modalRef = this.modalService.show(template); 
     // Khoi tao form
     for (var i = 0; i < this.statusContainer.length; i++) {
-      if (this.statusContainer[i].id == id_Product)
+      if (this.statusContainer[i].id == id_Product_Container)
       {
         this.container_to = "";
         this.amount = this.statusContainer[i].amount;
-        this.product_id = this.statusContainer[i].id;
+        this.product_id = this.statusContainer[i].product_id;
         this.user_id = this.statusContainer[i].user_id; 
         this.formMoveProduct = this.fb.group({
           code: this.statusContainer[i].code,
@@ -225,8 +224,7 @@ export class ChiTietKhoHangComponent implements OnInit {
 
   }
 
-  moveProduct(formMoveProduct) {
-    console.log("user_id: " + this.user_id);
+  moveProduct(formMoveProduct) { 
     // Kiem tra da chon kho dich chua
     if (this.container_to == "") {
       alert("Mời bạn chọn kho đích.");

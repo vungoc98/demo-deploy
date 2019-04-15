@@ -491,16 +491,12 @@ app.post('/updateContainerInfo', jsonParser, (req, res) => {
 // 2.3.2. Tinh trang kho hang
 app.post('/statusContainer', jsonParser, (req, res) => {
 	products.splice(0, products.length);
-	var sql = `select distinct container_product_detail.id, product.code, user_id, product.name, amount, date_format(manufacturing_date, '%d-%m-%Y') as manufacturing_date,
+	var sql = `select distinct container_product_detail.id, product.id as product_id, product.code, user_id, product.name, amount, date_format(manufacturing_date, '%d-%m-%Y') as manufacturing_date,
 	 date_format(expiry_date, '%d-%m-%Y') as expiry_date from product, 
 	 container_product_detail where product.id = container_product_detail.product_id and container_product_detail.container_id = ?`;
 	sql = mysql.format(sql, req.body.id);
 	con.query(sql, function(err, results) {
-		if (err) throw err;
-		for(var i = 0; i < results.length; i++) {
-			products[i] = new product(results[i].id, results[i].code, results[i].name, "", "", "", "", "", "",
-			 results[i].amount, results[i].manufacturing_date, results[i].expiry_date, results[i].user_id); 
-		} 
+		if (err) throw err; 
 		res.send(products);
 	})
 })

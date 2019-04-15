@@ -366,19 +366,7 @@ export class TaoDonNhapHangComponent implements OnInit {
             }
           }    
         }    
-      }) 
-
-    // // De san pham tim kiem len dau 
-    // for (var i = 0; i < this.searchProducts.length; i++) {
-    //   for (var j = i; j < this.products.length; j++) {
-    //     if(this.products[j].id == this.searchProducts[i].id) { 
-    //       let tmp = this.products[i];
-    //       this.products[i] = this.searchProducts[i];
-    //       this.products[j] = tmp;
-    //       break;
-    //     }
-    //   } 
-    // }   
+      })    
     // Kiem tra co hien so trang hay khong
     if (this.products_copy.length > this.amount_products_page_product) {
       this.display_pages_product = true;
@@ -395,19 +383,19 @@ export class TaoDonNhapHangComponent implements OnInit {
 
   // Lay thong tin don nhap hang va gui len server
   createOrder(formCreateOrder) { 
-    // Chuyen du lieu sang dang date trong mysql 
-    // Ngay tao don hang => phai la ngay hien tai
-    //var dateCreated = new Date();  
-    var dateCreated = new Date(formCreateOrder.value.ngay_tao);
-    var ngay_tao = (dateCreated.getFullYear()) + "-" + (dateCreated.getMonth() + 1) + "-" + dateCreated.getDate();
+    // Chuyen du lieu sang dang date trong mysql  
 
-    // Ngay du kien giao hang
-    var date = new Date(formCreateOrder.value.ngay_du_kien);
-    var ngay_du_kien = (date.getFullYear()) + '-' + (date.getMonth() + 1) + '-' +  date.getDate(); 
+    // //var dateCreated = new Date();  
+    // var dateCreated = new Date(formCreateOrder.value.ngay_tao);
+    // var ngay_tao = (dateCreated.getFullYear()) + "-" + (dateCreated.getMonth() + 1) + "-" + dateCreated.getDate();
+
+    // // Ngay du kien giao hang
+    // var date = new Date(formCreateOrder.value.ngay_du_kien);
+    // var ngay_du_kien = (date.getFullYear()) + '-' + (date.getMonth() + 1) + '-' +  date.getDate(); 
     const url = "/createOrder";
     const headers = new Headers( {'Content-Type': 'application/json'});
-    const body = JSON.stringify({'user_id': this.user_id, 'price_total': this.total_price, 'order_date': ngay_tao,
-      'import_date': ngay_du_kien, 'products': this.products_order, 'amount_total': this.total_amount});
+    const body = JSON.stringify({'user_id': this.user_id, 'price_total': this.total_price, 'order_date': formCreateOrder.value.ngay_tao.split("-").reverse().join("-"),
+      'import_date': formCreateOrder.value.ngay_du_kien.split("-").reverse().join("-"), 'products': this.products_order, 'amount_total': this.total_amount});
     this.http.post(url, body, { headers: headers })
     .toPromise()
     .then(res => res.json())
