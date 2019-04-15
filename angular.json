@@ -28,7 +28,7 @@
             ],
             "scripts": [
               "./node_modules/bootstrap/static/js/jquery-3.3.1.min.js",
-              "./node_modules/bootstrap/static/js/bootstrap.min.js"
+              "./node_modules/bootstrap/static/js/bootstrap.min.js", 
             ],
             "es5BrowserSupport": true
           },
