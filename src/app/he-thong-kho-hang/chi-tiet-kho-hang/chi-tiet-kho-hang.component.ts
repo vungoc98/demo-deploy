@@ -239,8 +239,8 @@ export class ChiTietKhoHangComponent implements OnInit {
       // Gui thong tin len server
       const url = "/moveProductInfo";
       const headers = new Headers({ 'Content-Type': 'application/json' });
-      const body = JSON.stringify({ 'container_from': this.id, 'product_id': this.product_id, 'manufacturing_date': formMoveProduct.value.manufacturing_date, 
-        'expiry_date': formMoveProduct.value.expiry_date, 'amount_before': this.amount, 'amount': formMoveProduct.value.amount, 'container_to': this.container_to, 'user_id': this.user_id });
+      const body = JSON.stringify({ 'container_from': this.id, 'product_id': this.product_id, 'manufacturing_date': formMoveProduct.value.manufacturing_date.split("-").reverse().join("-"), 
+        'expiry_date': formMoveProduct.value.expiry_date.split("-").reverse().join("-"), 'amount_before': this.amount, 'amount': formMoveProduct.value.amount, 'container_to': this.container_to, 'user_id': this.user_id });
       this.http.post(url, body, { headers: headers })
       .toPromise()
       .then(res => res.json())
