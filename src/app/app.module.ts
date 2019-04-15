@@ -4,7 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module'; 
 import { HttpClientModule } from '@angular/common/http';
-import { HttpModule } from '@angular/http'; 
+import { HttpModule } from '@angular/http';
+
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'; 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { NhaPhanPhoiComponent } from './nha-phan-phoi/nha-phan-phoi.component';
@@ -39,8 +43,7 @@ const routesConfig: Routes = [
    // 1.2. He thong kho hang
   { path: 'hethongkhohang/taomoikhohang', component: TaoMoiKhoHangComponent },
   { path: 'hethongkhohang/danhsachkhohang', component: DanhSachKhoHangComponent },
-  { path: 'hethongkhohang/danhsachkhohang/chitietkhohang/:id', component: ChiTietKhoHangComponent }, 
-  { path: 'hethongkhohang/danhsachkhohang/chitietkhohang/:id/tinhtrangkhohang/:code', component: ChuyenKhoHangComponent }, 
+  { path: 'hethongkhohang/danhsachkhohang/chitietkhohang/:id', component: ChiTietKhoHangComponent },  
   { path: 'hethongkhohang/thongke', component: ThongKeComponent },
 ]
 
