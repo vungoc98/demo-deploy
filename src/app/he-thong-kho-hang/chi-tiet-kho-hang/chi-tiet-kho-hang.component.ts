@@ -99,6 +99,7 @@ export class ChiTietKhoHangComponent implements OnInit {
           this.statusContainer[i] = resJson[i]; 
         }
       })
+      console.log("So luong hang hoa trong tab tinh trang kho hang: " + this.statusContainer.length);
       this.formSearchProduct.setValue({
         name: '',
         code: ''
@@ -119,6 +120,7 @@ export class ChiTietKhoHangComponent implements OnInit {
           this.containers[i] = resJson[i]; 
         }
       })
+      console.log("So luong hang hoa trong tab lich su kho hang: " + this.containers.length);
       this.formSearchProduct.setValue({
         name: '',
         code: ''
@@ -139,9 +141,9 @@ export class ChiTietKhoHangComponent implements OnInit {
         this.amount_order = resJson.amount_order;
         this.amount_to = resJson.amount_to;
         this.amount_rest = resJson.amount_rest;
-        this.products = resJson.products; 
-        console.log(this.products);
+        this.products = resJson.products;  
       }) 
+      console.log("so luong hang hoa trong tab thong ke hang hoa: " + this.products.length);
     }
   }
 
