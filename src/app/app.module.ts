@@ -73,7 +73,10 @@ const routesConfig: Routes = [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    HttpModule
+    HttpModule,
+    ModalModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    TabsModule.forRoot()
   ],
   providers: [AcountInfoService],
   bootstrap: [AppComponent]
