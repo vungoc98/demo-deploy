@@ -52,11 +52,27 @@ export class ChiTietKhoHangComponent implements OnInit {
     if (username == undefined) { 
       this.router.navigateByUrl("", {skipLocationChange: true});  
     }  
- 
-    // Lay id cua cac kho hang khac
-    var url = "/getAnotherIdContainer";
+
+    // Lay thong tin kho hang co id = this.id
+    var url = "/getContainerInfo";
     var headers = new Headers({ 'Content-Type': 'application/json' });
-    var body = JSON.stringify({ 'id': this.id });
+    var body = JSON.stringify({'id': this.id});
+    await this.http.post(url, body, { headers: headers })
+    .toPromise()
+    .then(res => res.json())
+    .then(resJson => {
+        this.formUpdateContainer.setValue({
+          name: resJson[0].name,
+          code: resJson[0].code,
+          address: resJson[0].address,
+          mobile: resJson[0].mobile,
+        });
+    })
+
+    // Lay id cua cac kho hang khac
+    url = "/getAnotherIdContainer";
+    headers = new Headers({ 'Content-Type': 'application/json' });
+    body = JSON.stringify({ 'id': this.id });
     this.http.post(url, body, { headers: headers })
     .toPromise()
     .then(res => res.json())
@@ -69,27 +85,9 @@ export class ChiTietKhoHangComponent implements OnInit {
   }
 
 
-  async chiTietKhoHang(tab: TabDirective) {
-    console.log("Vao day");
-    if (tab.heading == "Thông tin cơ bản") {
-      // Lay thong tin kho hang co id = this.id
-      const url = "/getContainerInfo";
-      const headers = new Headers({ 'Content-Type': 'application/json' });
-      const body = JSON.stringify({'id': this.id});
-      await this.http.post(url, body, { headers: headers })
-      .toPromise()
-      .then(res => res.json())
-      .then(resJson => {
-          this.formUpdateContainer.setValue({
-            name: resJson[0].name,
-            code: resJson[0].code,
-            address: resJson[0].address,
-            mobile: resJson[0].mobile,
-          });
-      })
-    }
+  async chiTietKhoHang(tab: TabDirective) { 
     // tinh trang kho hang
-    else if (tab.heading == "Tình trạng kho hàng") {
+    if (tab.heading == "Tình trạng kho hàng") {
       this.statusContainer.splice(0, this.statusContainer.length);
       // Tinh trang kho hang co id = this.id
       const url = "/statusContainer";
@@ -148,6 +146,7 @@ export class ChiTietKhoHangComponent implements OnInit {
         this.products = resJson.products;  
       }) 
       console.log("so luong hang hoa trong tab thong ke hang hoa: " + this.products.length);
+      console.log("So luong chuyen den kho : " + this.amount_from);
     }
   }
 
