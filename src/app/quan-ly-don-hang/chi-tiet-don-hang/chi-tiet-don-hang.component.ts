@@ -83,7 +83,7 @@ export class ChiTietDonHangComponent implements OnInit {
   	})
 
     // Lay thong tin don hang va thong tin nha cung cap
-    var url = "http://localhost:3000/getOrderInfoById";
+    var url = "/getOrderInfoById";
     var headers = new Headers({'Content-Type': 'application/json'});
     var body = JSON.stringify({'id': this.id, 'order_type': this.order_type});
     this.http.post(url, body, { headers: headers })
@@ -104,7 +104,7 @@ export class ChiTietDonHangComponent implements OnInit {
     })
 
     // Lay danh sach hang hoa cua don hang
-    url = "http://localhost:3000/getOrderProducts";
+    url = "/getOrderProducts";
     this.http.post(url, body, { headers: headers })
     .toPromise()
     .then(res => res.json())
@@ -115,7 +115,7 @@ export class ChiTietDonHangComponent implements OnInit {
 
   // Khi nhan vao button 'Xác nhận' => xac nhan don hang 
   xacNhanDonHang() {
-    var url = "http://localhost:3000/confirmOrderId";
+    var url = "/confirmOrderId";
     var headers = new Headers({'Content-Type': 'application/json'});
     var body = JSON.stringify({'id': this.id});
     this.http.post(url, body, { headers: headers })
@@ -135,7 +135,7 @@ export class ChiTietDonHangComponent implements OnInit {
 
   // Xac nhan huy don
   async huyDon() {
-    var url = "http://localhost:3000/cancelOrderId";
+    var url = "/cancelOrderId";
     var headers = new Headers({'Content-Type': 'application/json'});
     var body = JSON.stringify({'id': this.id, 'reason': this.reason.trim()});
     await this.http.post(url, body, { headers: headers })
@@ -151,7 +151,7 @@ export class ChiTietDonHangComponent implements OnInit {
 
   // Khi nhan vao button 'Xuất hàng' => Hien thi modal de chon kho hang can xuat
   async openModalXuatHang(xuathang: TemplateRef<any>) {
-    var url = "http://localhost:3000/exportOrderId";
+    var url = "/exportOrderId";
     var headers = new Headers({'Content-Type': 'application/json'});
     var body = JSON.stringify({'id': this.id});
     await this.http.post(url, body, { headers: headers })
@@ -178,7 +178,7 @@ export class ChiTietDonHangComponent implements OnInit {
       }
     }
     if (this.array_object_container_products[index].products.length == i) { 
-      var url = "http://localhost:3000/chooseContainerExport";
+      var url = "/chooseContainerExport";
       var headers = new Headers( { 'Content-Type': 'application/json' });
       var body = JSON.stringify( { 'order_id': this.id, 'container_id': this.array_object_container_products[index].container.id, 'order_products': this.products } );
       this.http.post(url, body, { headers: headers })

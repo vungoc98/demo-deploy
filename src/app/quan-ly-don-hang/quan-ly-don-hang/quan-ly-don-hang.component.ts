@@ -40,7 +40,7 @@ export class QuanLyDonHangComponent implements OnInit {
     this.order_type = "nhaphang";
 
     // Lay danh sach don nhap hang
-    var url = "http://localhost:3000/getOrderImportInfo";
+    var url = "/getOrderImportInfo";
     var headers = new Headers( {'Content-Type': 'application/json' });
     await this.http.get(url, { headers: headers})
     .toPromise()
@@ -61,10 +61,10 @@ export class QuanLyDonHangComponent implements OnInit {
     this.current_page = 1;
     var url;
     if (this.order_type == "nhaphang") {
-      url = "http://localhost:3000/getOrderImportInfo";
+      url = "/getOrderImportInfo";
     }
     else {
-      url = "http://localhost:3000/getOrderExportInfo";
+      url = "/getOrderExportInfo";
     }
     var headers = new Headers( {'Content-Type': 'application/json' });
     await this.http.get(url, { headers: headers})
@@ -96,7 +96,7 @@ export class QuanLyDonHangComponent implements OnInit {
 
   // Tim kiem don hang theo ma don hang va ten (nha cung cap hoac sieu thi)
   async searchOrder(formSearch) { 
-    const url = "http://localhost:3000/searchOrder";
+    const url = "/searchOrder";
     const headers = new Headers( {'Content-Type': 'application/json' });
     const body = JSON.stringify({'name': formSearch.value.name, 'code': formSearch.value.code, 'order_type': this.order_type});
     await this.http.post(url, body, { headers: headers })

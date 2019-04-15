@@ -104,7 +104,7 @@ export class TaoDonNhapHangComponent implements OnInit {
   async openModal1(template1: TemplateRef<any>) {
     this.providers.splice(0, this.providers.length);
     // lay danh sach nha cung cap
-    var url = "http://localhost:3000/getProvidersInfo";
+    var url = "/getProvidersInfo";
     var headers = new Headers({ 'Content-Type': 'application/json' });
     await this.http.get(url, { headers: headers })
     .toPromise()
@@ -208,7 +208,7 @@ export class TaoDonNhapHangComponent implements OnInit {
     // this.providers.splice(0, this.providers.length);
     this.products.splice(0, this.products.length);
     // lay danh sach hang hoa cua nha cung cap da chon
-    const  url = "http://localhost:3000/getProviderProducts";
+    const  url =  "/getProviderProducts";
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const body = JSON.stringify({ 'user_id': this.user_id });
     await this.http.post(url, body, { headers: headers })
@@ -338,21 +338,13 @@ export class TaoDonNhapHangComponent implements OnInit {
 
   // Tim kiem hang hoa phuc vu qua trinh nhap hang
   async onSearch() {  
-    const  url = "http://localhost:3000/searchProviderProducts";
+    const  url = "/searchProviderProducts";
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const body = JSON.stringify({ 'user_id': this.user_id, 'name': this.formSearch.value.name, 'code': this.formSearch.value.code });
     await this.http.post(url, body, { headers: headers })
     .toPromise()
     .then(res => res.json())
-    .then(resJson => {
-      // for (var i = 0; i < resJson.length; i++) {
-      //   this.searchProducts[i] = resJson[i];
-      //   for (var j = 0; j < this.imports.length; j++) {
-      //     if (this.imports[j].id == this.searchProducts[i].id) {
-      //       this.searchProducts[i].checked = true; 
-      //     }
-      //   }
-      // } 
+    .then(resJson => { 
       this.products_copy = resJson;
         var i, j;
         // Gan trang thai cua phan tu cu = phan tu moi vua tim kiem
@@ -412,7 +404,7 @@ export class TaoDonNhapHangComponent implements OnInit {
     // Ngay du kien giao hang
     var date = new Date(formCreateOrder.value.ngay_du_kien);
     var ngay_du_kien = (date.getFullYear()) + '-' + (date.getMonth() + 1) + '-' +  date.getDate(); 
-    const url = "http://localhost:3000/createOrder";
+    const url = "/createOrder";
     const headers = new Headers( {'Content-Type': 'application/json'});
     const body = JSON.stringify({'user_id': this.user_id, 'price_total': this.total_price, 'order_date': ngay_tao,
       'import_date': ngay_du_kien, 'products': this.products_order, 'amount_total': this.total_amount});
