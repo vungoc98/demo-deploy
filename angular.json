@@ -24,11 +24,11 @@
             ],
             "styles": [
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
-              "./node_modules/bootstrap/static/css/bootstrap.min.css"
+              "src/css/bootstrap.min.css"
             ],
             "scripts": [
-              "./node_modules/bootstrap/static/js/jquery-3.3.1.min.js",
-              "./node_modules/bootstrap/static/js/bootstrap.min.js", 
+              "src/js/bootstrap.min.js",
+              "src/js/jquery-3.3.1.min.js"
             ],
             "es5BrowserSupport": true
           },
@@ -83,12 +83,15 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
-            "styles": [ 
+            "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "../node_modules/bootstrap/dist/js/jquery-3.3.1.min.js",
+              "../node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
