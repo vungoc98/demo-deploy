@@ -14,7 +14,7 @@
 			</div>  
 			<div>
 			  <tabset [justified]="true">
-			    <tab heading="Thông tin cơ bản" id="tab1" (select)="chiTietKhoHang('thongtincoban');">
+			    <tab heading="Thông tin cơ bản" id="tab1" (selectTab)="chiTietKhoHang('thongtincoban');">
 			    	<div class="tab">
 						<form (ngSubmit)="onSubmitUpdate(formUpdateContainer);" [formGroup]="formUpdateContainer">
 							<div class="form-group">
