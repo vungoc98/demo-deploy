@@ -98,7 +98,7 @@ export class DanhSachNhomNguoiDungComponent implements OnInit {
       body = JSON.stringify({ 'acount_type': 'Nhà phân phối' });
       this.acount_type = "Nhà phân phối";
     }
-    else if (type.heading = "Nhà cung cấp") {
+    else if (type.heading == "Nhà cung cấp") {
       body = JSON.stringify({ 'acount_type': 'Nhà cung cấp' });
       this.acount_type = "Nhà cung cấp";
     }

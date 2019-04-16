@@ -59,6 +59,7 @@ export class QuanLyDonHangComponent implements OnInit {
   // Tim loai don hang => hien giao dien tuong ung
   async select(type: TabDirective) {  
     this.current_page = 1;
+    this.display_pages = false;
     var url;
     if (type.heading == "Đơn nhập hàng") {
       this.order_type = "nhaphang";
