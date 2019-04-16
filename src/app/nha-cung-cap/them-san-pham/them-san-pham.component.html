@@ -26,7 +26,7 @@
 							<select class="form-control" required=""  [(ngModel)]="selectedType" [ngModelOptions]="{standalone: true}">
 								<option value="" disabled selected hidden>Chọn nhóm sản phẩm</option>
 								<option *ngFor="let type of product_type" value="{{type}}">{{type}}</option> 
-								<option value="">{{type}}</option> 
+								<option value="">Không chọn nhóm</option> 
 							</select>
 						</div>
 						<div class="col-sm-3">
@@ -72,7 +72,7 @@
 				</div>   
 				<div class="modal-footer">
 					<button class="btn btn-primary" (click)="insertProduct();">Lưu</button>
-					<button class="btn btn-danger" style="margin-left: 2%" (click)="addProduct=!addProduct">Hủy</button>
+					<button class="btn btn-danger" style="margin-left: 2%" routerLink="/nhacungcap/danhsachsanpham">Hủy</button>
 				</div> 
 			</form> 
 		</div>

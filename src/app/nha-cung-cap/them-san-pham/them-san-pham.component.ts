@@ -134,12 +134,7 @@ export class ThemSanPhamComponent implements OnInit {
              //console.log("j = " + j + " checked: " + this.array_products_copy[i].checked + "checked1: " + this.array_products[j].checked);
              break;
           }
-        } 
-        
-        //   console.log("index: " + index);
-        // if (index != -1) { 
-        //   this.array_products_copy[i].checked = this.array_products[index].checked;
-        // }
+        }  
       }
     })  
     // Kiem tra co hien so trang hay khong
