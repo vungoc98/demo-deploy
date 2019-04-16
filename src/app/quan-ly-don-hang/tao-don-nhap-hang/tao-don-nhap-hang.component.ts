@@ -25,7 +25,7 @@ export class TaoDonNhapHangComponent implements OnInit {
   page_provider; // Chi so trang
   display_pages_provider: boolean = false; // Co hien trang hay khong 
   current_page_provider = 1; // Set active cho cac page
-  number_provider = 1;
+  number_provider = 5;
   display_providers = []; // Chua san pham hien thi tung trang, moi trang hien thi number provider
   amount_products_page_provider = 5; // so luong san pham moi trang 
 

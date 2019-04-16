@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Http, Headers } from '@angular/http';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { TabDirective } from 'ngx-bootstrap/tabs';
 
 @Component({
   selector: 'app-danh-sach-nhom-nguoi-dung',
@@ -48,6 +49,7 @@ export class DanhSachNhomNguoiDungComponent implements OnInit {
     } 
 
     // lay danh sach nguoi dung cho tab mac dinh
+    // Tab mac dinh la tab Nha phan phoi
     this.users.splice(0, this.users.length);
     const url = "/getUserInfo";
     const headers = new Headers({ 'Content-Type': 'application/json' });
@@ -86,17 +88,17 @@ export class DanhSachNhomNguoiDungComponent implements OnInit {
   }
   
   // Lay danh sach nguoi dung
-  async select(type: string) { 
+  async select(type: TabDirective) { 
     this.page = 1;
     this.users.splice(0, this.users.length);
     const url = "/getUserInfo";
     const headers = new Headers({ 'Content-Type': 'application/json' });
     var body;
-    if (type == 'nhaphanphoi') {
+    if (type.heading == "Nhà phân phối") {
       body = JSON.stringify({ 'acount_type': 'Nhà phân phối' });
       this.acount_type = "Nhà phân phối";
     }
-    else if (type == 'nhacungcap') {
+    else if (type.heading = "Nhà cung cấp") {
       body = JSON.stringify({ 'acount_type': 'Nhà cung cấp' });
       this.acount_type = "Nhà cung cấp";
     }
