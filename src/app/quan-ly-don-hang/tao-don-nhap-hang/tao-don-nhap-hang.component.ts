@@ -394,8 +394,8 @@ export class TaoDonNhapHangComponent implements OnInit {
     // var ngay_du_kien = (date.getFullYear()) + '-' + (date.getMonth() + 1) + '-' +  date.getDate(); 
     const url = "/createOrder";
     const headers = new Headers( {'Content-Type': 'application/json'});
-    const body = JSON.stringify({'user_id': this.user_id, 'price_total': this.total_price, 'order_date': formCreateOrder.value.ngay_tao.split("-").reverse().join("-"),
-      'import_date': formCreateOrder.value.ngay_du_kien.split("-").reverse().join("-"), 'products': this.products_order, 'amount_total': this.total_amount});
+    const body = JSON.stringify({'user_id': this.user_id, 'price_total': this.total_price, 'order_date': formCreateOrder.value.ngay_tao.split("/").reverse().join("-"),
+      'import_date': formCreateOrder.value.ngay_du_kien.split("/").reverse().join("-"), 'products': this.products_order, 'amount_total': this.total_amount});
     this.http.post(url, body, { headers: headers })
     .toPromise()
     .then(res => res.json())

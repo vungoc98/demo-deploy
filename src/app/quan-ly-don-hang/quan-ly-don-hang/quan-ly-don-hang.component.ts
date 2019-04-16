@@ -73,14 +73,12 @@ export class QuanLyDonHangComponent implements OnInit {
     .toPromise()
     .then(res => res.json())
     .then(resJson => { 
-      if (type.heading == "Đơn đặt hàng") {
-        this.order_type = "dathang";
+      if (this.order_type == "nhaphang") { 
         this.listOrderImport = resJson;
       }
       else this.listOrderExport = resJson;
     })
-    if (type.heading == "Đơn nhập hàng") {
-      this.order_type = "nhaphang";
+    if (this.order_type == "nhaphang") { 
       // Kiem tra so luong don  hang co du lon de hien thi trang
       if (this.listOrderImport.length > this.number) this.display_pages = true; 
       for (var i = 0; i < this.number && i < this.listOrderImport.length; i++) {
