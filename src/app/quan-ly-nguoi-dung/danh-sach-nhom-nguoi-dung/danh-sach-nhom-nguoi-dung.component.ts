@@ -110,9 +110,7 @@ export class DanhSachNhomNguoiDungComponent implements OnInit {
     .toPromise()
     .then(res => res.json())
     .then(resJson => {
-      for (var i = 0; i < resJson.length; i++) {
-        this.users[i] = resJson[i];
-      }
+      this.users = resJson;
     }) 
      // Kiem tra so luong user co du lon de hien thi trang
     if (this.users.length > this.number) this.display_pages = true;
