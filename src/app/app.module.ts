@@ -84,7 +84,16 @@ const routesConfig: Routes = [
   { path: 'nhacungcap/quanlydonhang', component: NccQuanLyDonHangComponent },
   { path: 'nhacungcap/quanlydonhang/xemchitiet/:id', component: NccThongTinDonHangComponent },
 
+  // 3.Sieu thi
+  { path: 'sieuthi', component: SieuThiGiaoDienChungComponent },
   
+  // 3.1. Dat hang
+  { path: 'sieuthi/dathang', component: DatHangComponent },
+  
+  // 3.2. Quan ly don hang
+  { path: 'sieuthi/quanlydonhang', component: SieuThiQuanLyDonHangComponent},
+  { path: 'sieuthi/quanlydonhang/xemchitiet/:id', component: SieuThiThongTinDonHangComponent },
+
 ]
 
 @NgModule({
