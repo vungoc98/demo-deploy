@@ -130,6 +130,45 @@ app.post('/register', jsonParser, (req, res) => {
 })
 // Ket thuc dang nhap - dang ky
 
+// Thong tin tai khoan cua nguoi dung
+// Cap nhat thong tin tai khoan
+app.post('/updateAcount', jsonParser, (req, res) => {
+	// ngay hien tai => tuong duong voi ngay cap nhat thong tin
+	var update_date = (new Date()).getFullYear() + "-" + ((new Date()).getMonth() + 1) + "-" + ((new Date()).getDate());
+	var message; // thong bao ket qua cap nhat
+	var sql = "update user1 set name = ?, address = ?, email = ?, mobile = ?, update_date = ? where username = ?";
+	sql = mysql.format(sql, [req.body.name, req.body.address, req.body.email, req.body.mobile, update_date, req.body.username]);
+	console.log(sql);
+	con.query(sql, function(err, results) {
+		if (err) {
+			message = "Error";
+			res.send(message);
+			throw err;
+		}
+		message = "Thay đổi thành công";
+		res.send(message);
+	})
+});
+
+// Thay doi mat khau tai khoan
+app.post('/changePassword', jsonParser, (req, res) => {
+	// ngay hien tai => tuong duong voi ngay cap nhat thong tin
+	var update_date =(new Date()).getFullYear() + "-" + ((new Date()).getMonth() + 1) + "-" + ((new Date()).getDate());
+	var sql = "update user1 set password = ?, update_date = ? where username = ?"; 
+	sql = mysql.format(sql, [req.body.newPassword, update_date, req.body.username]);
+	con.query(sql, function(err, results) {
+		if (err) {
+			message = "Error";
+			res.send(message);
+			throw err;
+		}
+		message = "Thay đổi thành công";
+		res.send(message);
+	})
+})
+
+// Ket thuc quan ly thong tin tai khoan cua nguoi dung
+
 // I. NHA PHAN PHOI
 // 1. He thong san pham
 // 1.1. Tao moi san pham
@@ -1286,3 +1325,68 @@ app.post('/chooseContainerExport', jsonParser, function(req, res) {
 	})
 })
 // Ket thuc quan ly don hang
+
+// IV. Quan ly nguoi dung
+// Lay danh sach nguoi dung
+app.post('/getUserInfo', jsonParser, (req, res) => {
+	// Kiem tra xem acount_type la gi
+	var acount_type = req.body.acount_type;
+	var sql = "select code, name, address, email, mobile, image from user1 where acount_type = ?";
+	sql = mysql.format(sql, acount_type);
+	con.query(sql, function(err, results) {
+		if (err) throw err;
+		res.send(results);
+	})
+})
+
+// Tim kiem thong tin nguoi dung
+app.post('/searchUserInfo', jsonParser, (req, res) => { 
+	var sql;
+
+	// Tim kiem theo ten
+	if (req.body.name != "" && req.body.code == "") {
+		sql = "select code, name, address, email, mobile, image from user1 where acount_type = ? and name like ?"; 
+		sql = mysql.format(sql, [req.body.acount_type, "%" + req.body.name + "%"]);
+	}
+	// Tim kiem theo ma
+	else if (req.body.name == "" && req.body.code != "") {
+		sql = "select code, name, address, email, mobile, image from user1 where acount_type = ? and code like ?"; 
+		sql = mysql.format(sql, [req.body.acount_type, "%" + req.body.code + "%"]);
+	}
+	// Tim kiem theo ca ten va ma
+	else if (req.body.name != "" && req.body.code != "") {
+		sql = "select code, name, address, email, mobile, image from user1 where acount_type = ? and code = ? and name = ?"; 
+		sql = mysql.format(sql, [req.body.acount_type, req.body.code, req.body.name]);
+	}
+	// De trong ca name va code
+	else {
+		sql = "select code, name, address, email, mobile, image from user1 where acount_type = ?";
+		sql = mysql.format(sql, req.body.acount_type);
+	} 
+	con.query(sql, function(err, results) {
+		if (err) throw err;
+		res.send(results);
+	})
+})
+
+// Them nhan vien nha phan phoi
+app.post('/addDistributor', jsonParser, (req, res) => {
+	var rdmCode = "";
+	for( ; rdmCode.length < 6; rdmCode  += Math.random().toString(36).substr(2));
+	var code = rdmCode.substr(0, 6);
+	var sql = `insert into user1(username, password, name, address, email, mobile, code, image, status, acount_type, dele) 
+	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+	sql = mysql.format(sql, [req.body.username, req.body.password, req.body.name, req.body.address, req.body.email,
+		req.body.mobile, code, req.body.image, 0, "Nhà phân phối", 0]);
+	con.query(sql, function(err, results) {
+		if (err) throw err;
+		sql = "select code, name, address, email, mobile, image from user1 where acount_type = ?";
+		sql = mysql.format(sql, "Nhà phân phối");
+		con.query(sql, function(err, results) {
+			if (err) throw err;
+			res.send(results);
+		})
+	})
+})
+
+// Ket thuc quan ly nguoi dung

@@ -20,7 +20,7 @@ export class QuanLyDonHangComponent implements OnInit {
   page; // Chi so trang
   display_pages: boolean = false; // Co hien trang hay khong 
   current_page = 1; // Set active cho cac page
-  number = 1;
+  number = 5;
   display_listOrderImport = []; // chua danh sach cac don hang hien thi theo tung trang (moi trang co number don hang)
   display_listOrderExport = [];
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: Http, private router: Router) { }
