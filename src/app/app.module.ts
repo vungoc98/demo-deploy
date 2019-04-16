@@ -33,13 +33,13 @@ import { ThongTinTaiKhoanComponent } from './thong-tin-tai-khoan/thong-tin-tai-k
 import { DanhSachNhomNguoiDungComponent } from './quan-ly-nguoi-dung/danh-sach-nhom-nguoi-dung/danh-sach-nhom-nguoi-dung.component';
 const routesConfig: Routes = [
   { path: '', component: LoginComponent },  
-  { path: 'register', component: RegisterComponent },
+  { path: 'https://ngoc-demo-deploy-app.herokuapp.com/register', component: RegisterComponent },
   
   // Thong tin tai khoan
-  { path: 'thongtintaikhoan/:name', component: ThongTinTaiKhoanComponent }, 
+  { path: 'https://ngoc-demo-deploy-app.herokuapp.com/thongtintaikhoan/:name', component: ThongTinTaiKhoanComponent }, 
   
   // 1. nha phan phoi
-  { path: 'nhaphanphoi', component: NhaPhanPhoiComponent }, 
+  { path: 'https://ngoc-demo-deploy-app.herokuapp.com/nhaphanphoi', component: NhaPhanPhoiComponent }, 
   
   // 1.1. He thong san pham
   { path: 'hethongsanpham/taomoisanpham', component: TaoMoiSanPhamComponent },
