@@ -31,6 +31,12 @@ import { QuanLyDonHangComponent } from './quan-ly-don-hang/quan-ly-don-hang/quan
 import { TaoDonNhapHangComponent } from './quan-ly-don-hang/tao-don-nhap-hang/tao-don-nhap-hang.component';
 import { ThongTinTaiKhoanComponent } from './thong-tin-tai-khoan/thong-tin-tai-khoan.component';
 import { DanhSachNhomNguoiDungComponent } from './quan-ly-nguoi-dung/danh-sach-nhom-nguoi-dung/danh-sach-nhom-nguoi-dung.component';
+import { DanhSachSanPhamComponent } from './nha-cung-cap/danh-sach-san-pham/danh-sach-san-pham.component';
+import { GiaoDienChungComponent } from './nha-cung-cap/giao-dien-chung/giao-dien-chung.component';
+import { NccQuanLyDonHangComponent } from './nha-cung-cap/ncc-quan-ly-don-hang/ncc-quan-ly-don-hang.component';
+import { NccThongTinDonHangComponent } from './nha-cung-cap/ncc-thong-tin-don-hang/ncc-thong-tin-don-hang.component';
+import { SignInComponent } from './nha-cung-cap/sign-in/sign-in.component';
+import { ThemSanPhamComponent } from './nha-cung-cap/them-san-pham/them-san-pham.component';
 const routesConfig: Routes = [
   { path: '', component: LoginComponent },  
   { path: 'register', component: RegisterComponent },
@@ -62,6 +68,17 @@ const routesConfig: Routes = [
   // 1.4. Quan ly nguoi dung
   { path: 'quanlynguoidung', component: DanhSachNhomNguoiDungComponent },  
 
+  // 2. Nha cung cap
+  { path: 'nhacungcap', component: GiaoDienChungComponent },
+  
+  // 2.1. Danh sach san pham
+  { path: 'nhacungcap/danhsachsanpham', component: DanhSachSanPhamComponent },
+  { path: 'nhacungcap/danhsachsanpham/themsanpham', component: ThemSanPhamComponent },
+  
+  // 2.2. Quan ly don hang
+  { path: 'nhacungcap/quanlydonhang', component: NccQuanLyDonHangComponent },
+  { path: 'nhacungcap/quanlydonhang/xemchitiet/:id', component: NccThongTinDonHangComponent },
+
   
 ]
 
@@ -81,7 +98,7 @@ const routesConfig: Routes = [
     TaoMoiKhoHangComponent,
     DanhSachKhoHangComponent,
     ChiTietKhoHangComponent, 
-    ThongKeComponent, ChiTietDonHangComponent, QuanLyDonHangComponent, TaoDonNhapHangComponent, ThongTinTaiKhoanComponent, DanhSachNhomNguoiDungComponent,
+    ThongKeComponent, ChiTietDonHangComponent, QuanLyDonHangComponent, TaoDonNhapHangComponent, ThongTinTaiKhoanComponent, DanhSachNhomNguoiDungComponent, DanhSachSanPhamComponent, GiaoDienChungComponent, NccQuanLyDonHangComponent, NccThongTinDonHangComponent, SignInComponent, ThemSanPhamComponent,
   ],
   imports: [
     FormsModule,

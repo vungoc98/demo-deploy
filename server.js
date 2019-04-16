@@ -413,7 +413,7 @@ app.post('/updateProduct_Category', jsonParser, (req, res) => {
 
 // Ket thuc he thong san pham
 
-// II. He thong kho hang
+// 2. He thong kho hang
 // 2.1. Tao moi kho hang 
 app.post('/createContainer', jsonParser, (req, res) => { 
 	// ngay hien tai => tuong duong voi ngay tao thong tin
@@ -848,7 +848,7 @@ app.get('/thongketoanbo', async function(req, res) {
 
 // Ket thuc he thong kho hang
 
-// III. Quan ly don hang
+// 3. Quan ly don hang
 //1. Tao don nhap hang
 // Lay thong tin nha cung cap
 provider= require('./provider.js');
@@ -1326,7 +1326,7 @@ app.post('/chooseContainerExport', jsonParser, function(req, res) {
 })
 // Ket thuc quan ly don hang
 
-// IV. Quan ly nguoi dung
+// 4. Quan ly nguoi dung
 // Lay danh sach nguoi dung
 app.post('/getUserInfo', jsonParser, (req, res) => {
 	// Kiem tra xem acount_type la gi
@@ -1390,3 +1390,325 @@ app.post('/addDistributor', jsonParser, (req, res) => {
 })
 
 // Ket thuc quan ly nguoi dung
+// Ket thuc I. Nha phan phoi
+
+// II. Nha cung cap
+// 1. Danh sach hang hoa hien co cua nha cung cap
+app.post('/getProviderProducts-NCC', jsonParser, function(req, res) { 
+	var sql = `select provider_product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.id = provider_product.product_id and
+		product.product_category_id = product_category.id and provider_product.dele = 0 and 
+		user1.username = ?`;
+	sql = mysql.format(sql, req.body.username);  
+	con.query(sql, function(err, results) {
+		if (err) throw err;
+		res.send(results);
+	})
+})
+
+// 1.1. Tim kiem hang hoa cua nha cung cap 
+app.post('/searchProduct-NCC', jsonParser, (req, res) => {
+	var sql;
+	// tim kiem chi theo ten san pham
+	if (req.body.name !="" && req.body.code == "" && req.body.product_category_name == "") {
+		sql = `select provider_product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.id = provider_product.product_id and
+		product.product_category_id = product_category.id and provider_product.dele = 0 and 
+		user1.username = ? and product.name like ?`;
+		sql = mysql.format(sql, [req.body.username, "%" + req.body.name + "%"]);
+	}
+	else if (req.body.name =="" && req.body.code != "" && req.body.product_category_name == "") {
+		sql = `select provider_product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.id = provider_product.product_id and
+		product.product_category_id = product_category.id and provider_product.dele = 0 and 
+		user1.username = ? and product.code like ?`;
+		sql = mysql.format(sql, [req.body.username, "%" + req.body.code + "%"]);
+	}
+	else if (req.body.name =="" && req.body.code == "" && req.body.product_category_name != "") {
+		sql = `select provider_product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.id = provider_product.product_id and
+		product.product_category_id = product_category.id and provider_product.dele = 0 and 
+		user1.username = ? and product_category.name like ?`;
+		sql = mysql.format(sql, [req.body.username, req.body.product_category_name]);
+	}
+	// tim kiem theo 2 thu
+	else if (req.body.name !="" && req.body.code != "" && req.body.product_category_name == "") {
+		sql = `select provider_product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.id = provider_product.product_id and
+		product.product_category_id = product_category.id and provider_product.dele = 0 and 
+		user1.username = ? and product.name = ? and product.code = ?`;
+		sql = mysql.format(sql, [req.body.username, req.body.name, req.body.code]); 
+	}
+	else if (req.body.name !="" && req.body.code == "" && req.body.product_category_name != "") {
+		sql = `select provider_product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.id = provider_product.product_id and
+		product.product_category_id = product_category.id and provider_product.dele = 0 and 
+		user1.username = ? and product.name like ? and product_category.name = ?`;
+		sql = mysql.format(sql, [req.body.username, "%" + req.body.name + "%", req.body.product_category_name]);
+	}
+	else if (req.body.name =="" && req.body.code != "" && req.body.product_category_name != "") {
+		sql = `select provider_product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.id = provider_product.product_id and
+		product.product_category_id = product_category.id and provider_product.dele = 0 and 
+		user1.username = ? and product.code like ? and product_category.name = ?`;
+		sql = mysql.format(sql, [req.body.username, "%" + req.body.code + "%", req.body.product_category_name]);
+	}
+	// ca 3 thu deu rong => hien thi tat ca danh sach
+	else if (req.body.name =="" && req.body.code == "" && req.body.product_category_name == ""){
+		sql = `select provider_product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.id = provider_product.product_id and
+		product.product_category_id = product_category.id and provider_product.dele = 0 and 
+		user1.username = ?`;
+		sql = mysql.format(sql, req.body.username);  
+	}
+	// tim kiem theo ca 3 thu
+	else {
+		sql = `select provider_product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.id = provider_product.product_id and
+		product.product_category_id = product_category.id and provider_product.dele = 0 and 
+		user1.username = ? and product.name = ? and product.code = ? and product_category.name = ?`;
+		sql = mysql.format(sql, [req.body.username, req.body.name, req.body.code, req.body.product_category_name]);
+	}
+	// console.log(sql);
+	con.query(sql, function(err, results) {
+		//console.log("r: " + results);
+		if (err) throw err;
+		res.send(results);
+	}) 
+})
+
+// 1.2 Xoa hang hoa cua nha cung cap
+app.post('/deleteProducts-NCC', jsonParser, async function(req, res) {
+	// ngay hien tai => tuong duong voi ngay cap nhat thong tin
+	var update_date = (new Date()).getFullYear() + "-" + ((new Date()).getMonth() + 1) + "-" + ((new Date()).getDate());
+	var sql, i;
+	for (i = 0; i < req.body.deleteProducts.length; i++) {
+		sql = "update provider_product set dele = 1, update_date = ? where id = ?";
+		sql = mysql.format(sql, [update_date, req.body.deleteProducts[i].id]);
+		results = await queryPromise(sql);
+		console.log(i + 1);
+	}
+	sql = `select provider_product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.id = provider_product.product_id and
+		product.product_category_id = product_category.id and provider_product.dele = 0 and 
+		user1.username = ?`;
+	sql = mysql.format(sql, req.body.username);
+	console.log("sql: " + sql); 
+	con.query(sql, function(err, results) {
+		if (err) throw err;
+		res.send(results);
+	})
+})
+app.post('/getProductsNotProvider-NCC', jsonParser, function(req, res) {
+	var sql = `select distinct product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.product_category_id = product_category.id and product.id not in (select product_id 
+		from provider_product, user1 where user1.id = provider_product.user_id and provider_product.dele = 0 and
+		user1.username = ?) and user1.username = ? order by name_category`;
+	sql = mysql.format(sql, [req.body.username, req.body.username]);  
+	con.query(sql, function(err, results) {
+		if (err) throw err;
+		res.send(results);
+	})
+})
+
+// 1.3. Tim kiem hang hoa ma nha cung cap chua co
+app.post('/searchProductNotProvider-NCC', jsonParser, (req, res) => {
+	var sql;
+	// tim kiem chi theo ten san pham
+	if (req.body.name !="" && req.body.code == "" && req.body.product_category_name == "") {
+		sql = `select distinct product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.product_category_id = product_category.id and product.id not in (select product_id 
+		from provider_product, user1 where user1.id = provider_product.user_id and provider_product.dele = 0 and
+		user1.username = ?) and user1.username = ? and product.name like ? order by name_category`;
+		sql = mysql.format(sql, [req.body.username, req.body.username, "%" + req.body.name + "%"]);
+	}
+	else if (req.body.name =="" && req.body.code != "" && req.body.product_category_name == "") {
+		sql = `select distinct product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.product_category_id = product_category.id and product.id not in (select product_id 
+		from provider_product, user1 where user1.id = provider_product.user_id and provider_product.dele = 0 and
+		user1.username = ?) and user1.username = ? and product.code like ? order by name_category`;
+		sql = mysql.format(sql, [req.body.username, req.body.username, "%" + req.body.code + "%"]);
+	}
+	else if (req.body.name =="" && req.body.code == "" && req.body.product_category_name != "") {
+		sql = `select distinct product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.product_category_id = product_category.id and product.id not in (select product_id 
+		from provider_product, user1 where user1.id = provider_product.user_id and provider_product.dele = 0 and
+		user1.username = ?) and user1.username = ? and product_category.name = ? order by name_category`;
+		sql = mysql.format(sql, [req.body.username, req.body.username, req.body.product_category_name]);
+	}
+	// tim kiem theo 2 thu
+	else if (req.body.name !="" && req.body.code != "" && req.body.product_category_name == "") {
+		sql = `select distinct product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.product_category_id = product_category.id and product.id not in (select product_id 
+		from provider_product, user1 where user1.id = provider_product.user_id and provider_product.dele = 0 and
+		user1.username = ?) and user1.username = ? and product.name =? and product.code = ? order by name_category`;
+		sql = mysql.format(sql, [req.body.username, req.body.username, req.body.name, req.body.code]); 
+	}
+	else if (req.body.name !="" && req.body.code == "" && req.body.product_category_name != "") {
+		sql = `select distinct product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.product_category_id = product_category.id and product.id not in (select product_id 
+		from provider_product, user1 where user1.id = provider_product.user_id and provider_product.dele = 0 and
+		user1.username = ?) and user1.username = ? and product.name like ? and product_category.name = ? order by name_category`;
+		sql = mysql.format(sql, [req.body.username, req.body.username, "%" + req.body.name + "%", req.body.product_category_name]);
+	}
+	else if (req.body.name =="" && req.body.code != "" && req.body.product_category_name != "") {
+		sql = `select distinct product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.product_category_id = product_category.id and product.id not in (select product_id 
+		from provider_product, user1 where user1.id = provider_product.user_id and provider_product.dele = 0 and
+		user1.username = ?) and user1.username = ? and product.code like ? and product_category.name = ? order by name_category`;
+		sql = mysql.format(sql, [req.body.username, req.body.username, "%" + req.body.code + "%", req.body.product_category_name]);
+	}
+	// ca 3 thu deu rong => hien thi tat ca danh sach
+	else if (req.body.name =="" && req.body.code == "" && req.body.product_category_name == ""){
+		sql = `select distinct product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.product_category_id = product_category.id and product.id not in (select product_id 
+		from provider_product, user1 where user1.id = provider_product.user_id and provider_product.dele = 0 and
+		user1.username = ?) and user1.username = ? order by name_category`;
+		sql = mysql.format(sql, [req.body.username, req.body.username]);  
+	}
+	// tim kiem theo ca 3 thu
+	else {
+		sql = `select distinct product.id, product.code, product.name, product.image, product.description,
+		product_category.name as name_category from user1, product, provider_product, product_category 
+		where user1.id = provider_product.user_id and product.product_category_id = product_category.id and product.id not in (select product_id 
+		from provider_product, user1 where user1.id = provider_product.user_id and provider_product.dele = 0 and
+		user1.username = ?) and user1.username = ? and product.name = ? and product.code = ? and product_category.name = ? order by name_category`;
+		sql = mysql.format(sql, [req.body.username, req.body.username, req.body.name, req.body.code, req.body.product_category_name]);
+	} 
+	con.query(sql, function(err, results) {
+		//console.log("r: " + results);
+		if (err) throw err;
+		res.send(results);
+	}) 
+})
+
+// 1.4. Them san pham cho nha cung cap
+app.post('/addProviderProducts-NCC', jsonParser, async function(req, res) {
+	// ngay hien tai => tuong duong voi ngay cap nhat thong tin
+	var update_date = (new Date()).getFullYear() + "-" + ((new Date()).getMonth() + 1) + "-" + ((new Date()).getDate());
+
+	var sql, i, j;
+	// Lay cac san pham da co trong nha cung cap nhung bi xoa
+	sql = `select provider_product.id, product_id from user1, provider_product where user1.id = provider_product.user_id 
+	and user1.username = ? and provider_product.dele = 1`;
+	sql = mysql.format(sql, req.body.username);
+	try {
+		product_id = await queryPromise(sql);
+	} catch(SQLException) {
+ 		res.send('0');
+	} 
+
+	// tim user_id
+	sql = `select user1.id from user1 where user1.username = ?`;
+	sql = mysql.format(sql, req.body.username);
+	try {
+		user_id = await queryPromise(sql); 
+	} catch(SQLException) {
+ 		res.send('0');
+	} 
+	for (i = 0; i < req.body.array_products.length; i++) {
+		if (req.body.array_products[i].checked == true) {
+			for (j = 0; j < product_id.length; j++) {
+				if (product_id[j].product_id == req.body.array_products[i].id) {
+					sql = `update provider_product set dele = 0 where id = ?`;
+					sql = mysql.format(sql, product_id[j].id);
+					try {
+						results = await queryPromise(sql);
+					} catch(SQLException) {
+				 		res.send('0');
+					}  
+					break;
+				}
+			} 
+			if (j == product_id.length) {
+				sql = `insert into provider_product(user_id, product_id, dele, update_date) 
+				values (?, ?, ?, ?)`;
+				sql = mysql.format(sql, [user_id[0].id, req.body.array_products[i].id, 0, update_date]); 
+				try {
+					results = await queryPromise(sql);
+				} catch(SQLException) { 
+			 		res.send('0');
+				}  
+			} 
+		}
+	}
+	res.send('1');
+})
+
+// 2. Quan ly don hang
+// 2.1 Lay danh sach don hang
+app.post('/getOrders-NCC', jsonParser, function(req, res) {
+	var sql = `select orders.id, orders.code, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date, 
+	date_format(import_date, '%d-%m-%Y') as import_date, orders.status 
+	from orders, user1 where user1.id = orders.user_id and user1.username = ?`;
+	sql = mysql.format(sql, req.body.username);
+	con.query(sql, function(err, results) {
+		if (err) {
+			res.send('0');
+		}
+		res.send(results);
+	})
+})
+
+// 2.2. Tim kiem don hang
+app.post('/searchOrders-NCC', jsonParser, function(req, res) {
+	var sql;
+	// Truong hop 1: Chi nhap trang thai don hang
+	if (req.body.status != "" && req.body.code.trim() == "") { 
+		sql = `select orders.id, orders.code, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date, 
+				date_format(import_date, '%d-%m-%Y') as import_date, orders.status 
+				from orders, user1 where user1.id = orders.user_id and user1.username = ? and orders.status = ?`;
+		sql = mysql.format(sql, [req.body.username, req.body.status]);
+ 
+	}
+
+	// Truong hop 2: Chi nhap ma don hang 
+	else if (req.body.status == "" && req.body.code.trim() != "") { 
+		sql = `select orders.id, orders.code, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date, 
+			date_format(import_date, '%d-%m-%Y') as import_date, orders.status 
+			from orders, user1 where user1.id = orders.user_id and user1.username = ? and orders.code like ?`;
+		sql = mysql.format(sql, [req.body.username, "%" + req.body.code.trim() + "%"]);  
+	}
+
+	// Truong hop 3 : Nhap ca trang thai va ma don hang
+	else if (req.body.status != "" && req.body.name.trim() != "") { 
+		sql = `select orders.id, orders.code, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date, 
+			date_format(import_date, '%d-%m-%Y') as import_date, orders.status 
+			from orders, user1 where user1.id = orders.user_id and user1.username = ? and orders.code = ? and orders.status = ?`;
+		sql = mysql.format(sql, [req.body.username, req.body.code.trim(), req.body.status]); 
+	}
+
+	// Truong hop 4: khong nhap gi ca
+	else { 
+		sql = `select orders.id, orders.code, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date, 
+			date_format(import_date, '%d-%m-%Y') as import_date, orders.status 
+			from orders, user1 where user1.id = orders.user_id and user1.username = ?`;
+		sql = mysql.format(sql, [req.body.username]);  
+	}
+	con.query(sql, function(err, results) {
+		if (err) {
+			res.send('0');
+		}
+		res.send(results);
+	})
+})
+
+// Ket thuc II. Nha cung cap
