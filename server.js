@@ -1712,3 +1712,114 @@ app.post('/searchOrders-NCC', jsonParser, function(req, res) {
 })
 
 // Ket thuc II. Nha cung cap
+
+// III. Sieu Thi
+// 1. Dat hang
+app.post('/createOrder-SieuThi', jsonParser, async function(req, res) {
+	// Buoc1: Tim user_id
+	var sql = "select id from user1 where user1.username = ?";
+	sql = mysql.format(sql, req.body.username);
+	try {
+		user_id = await queryPromise(sql);
+	} catch(SQLException) {
+		res.send('0');
+	}
+
+	// ngay hien tai => tuong duong voi ngay tao don hang
+	var order_date = (new Date()).getFullYear() + "-" + ((new Date()).getMonth() + 1) + "-" + ((new Date()).getDate());
+ 
+	// Buoc2: Them thong tin tong quat vao bang order
+	// Tao ma code cho don hang
+	var rdmCode = "";
+	for( ; rdmCode.length < 6; rdmCode  += Math.random().toString(36).substr(2));
+	var code = "ORDER_" + rdmCode.substr(0, 6);
+	sql = "insert into orders(code, user_id, price_total, amount_total, order_date, status) values (?,?,?,?,?,?)";
+	sql = mysql.format(sql, [code, user_id[0].id, req.body.price_total, req.body.amount_total, order_date, "Chờ xác nhận"]);
+	
+	try {
+		results = await queryPromise(sql);
+	} catch(SQLException) {
+		res.send('0');
+	}
+
+	try {
+		max_id = await queryPromise("select Max(id) as order_id from orders");
+	} catch(SQLException) {
+		res.send('0');
+	}
+	 
+
+	// Buoc 3: Them chi tiet cac san pham vao bang order_detail  
+	for (var i = 0; i < req.body.products.length; i++) { 
+		sql = `insert into order_detail(order_id, product_id, amount, price)
+		value (?, ?, ?, ?)`;
+		sql = mysql.format(sql, [max_id[0].order_id, req.body.products[i].id,
+			req.body.products[i].amount, req.body.products[i].prices]);  
+		try {
+			results = await queryPromise(sql);
+		} catch(SQLException) {
+			res.send('0');
+		}
+	}
+	res.send("1"); 
+})
+
+// 2. Quan ly don hang
+// 2.1 Lay danh sach don hang
+app.post('/getOrders-SieuThi', jsonParser, function(req, res) {
+	var sql = `select orders.id, orders.code, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date, 
+	date_format(export_date, '%d-%m-%Y') as export_date, orders.status 
+	from orders, user1 where user1.id = orders.user_id and user1.username = ?`;
+	sql = mysql.format(sql, req.body.username);
+	con.query(sql, function(err, results) {
+		if (err) {
+			res.send('0');
+		}
+		res.send(results);
+	})
+})
+
+// 2.2. Tim kiem don hang
+app.post('/searchOrders-SieuThi', jsonParser, function(req, res) {
+	var sql;
+	// Truong hop 1: Chi nhap trang thai don hang
+	if (req.body.status != "" && req.body.code.trim() == "") { 
+		sql = `select orders.id, orders.code, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date, 
+			date_format(export_date, '%d-%m-%Y') as export_date, orders.status 
+			from orders, user1 where user1.id = orders.user_id and user1.username = ? and orders.status = ?`;
+		sql = mysql.format(sql, [req.body.username, req.body.status]);
+ 
+	}
+
+	// Truong hop 2: Chi nhap ma don hang
+	else if (req.body.status == "" && req.body.code.trim() != "") { 
+		sql = `select orders.id, orders.code, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date, 
+			date_format(export_date, '%d-%m-%Y') as export_date, orders.status 
+			from orders, user1 where user1.id = orders.user_id and user1.username = ? and orders.code like ?`;
+		sql = mysql.format(sql, [req.body.username, "%" + req.body.code.trim() + "%"]);  
+	}
+
+	// Truong hop 3 : Nhap ca trang thai va ma don hang
+	else if (req.body.status!= "" && req.body.code.trim() != "") { 
+		sql = `select orders.id, orders.code, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date, 
+			date_format(export_date, '%d-%m-%Y') as export_date, orders.status 
+			from orders, user1 where user1.id = orders.user_id and user1.username = ? and orders.code = ? and orders.status = ?`;
+		sql = mysql.format(sql, [req.body.username, req.body.code.trim(), req.body.status]); 
+	}
+
+	// Truong hop 4: khong nhap gi ca
+	else { 
+		sql = `select orders.id, orders.code, amount_total, price_total, date_format(order_date, '%d-%m-%Y') as order_date, 
+			date_format(export_date, '%d-%m-%Y') as export_date, orders.status 
+			from orders, user1 where user1.id = orders.user_id and user1.username = ?`;
+		sql = mysql.format(sql, [req.body.username]);  
+	}
+	con.query(sql, function(err, results) {
+		if (err) {
+			res.send('0');
+		}
+		res.send(results);
+	})
+})
+
+// Ket thuc III.Sieu thi

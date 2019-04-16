@@ -81,7 +81,7 @@ export class DanhSachSanPhamComponent implements OnInit {
       this.current_page = this.page;
     }
     else {
-      for (var i = 0; i < this.amount_products_page; i++) {
+      for (var i = 0; i < this.amount_products_page && i < this.array_products_copy.length; i++) {
         this.display_products[i] = this.array_products_copy[i];
       }
     }

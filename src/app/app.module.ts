@@ -37,6 +37,11 @@ import { NccQuanLyDonHangComponent } from './nha-cung-cap/ncc-quan-ly-don-hang/n
 import { NccThongTinDonHangComponent } from './nha-cung-cap/ncc-thong-tin-don-hang/ncc-thong-tin-don-hang.component';
 import { SignInComponent } from './nha-cung-cap/sign-in/sign-in.component';
 import { ThemSanPhamComponent } from './nha-cung-cap/them-san-pham/them-san-pham.component';
+import { DatHangComponent } from './sieu-thi/dat-hang/dat-hang.component';
+import { SieuThiComponent } from './sieu-thi/sieu-thi/sieu-thi.component';
+import { SieuThiGiaoDienChungComponent } from './sieu-thi/sieu-thi-giao-dien-chung/sieu-thi-giao-dien-chung.component';
+import { SieuThiQuanLyDonHangComponent } from './sieu-thi/sieu-thi-quan-ly-don-hang/sieu-thi-quan-ly-don-hang.component';
+import { SieuThiThongTinDonHangComponent } from './sieu-thi/sieu-thi-thong-tin-don-hang/sieu-thi-thong-tin-don-hang.component';
 const routesConfig: Routes = [
   { path: '', component: LoginComponent },  
   { path: 'register', component: RegisterComponent },
@@ -98,7 +103,7 @@ const routesConfig: Routes = [
     TaoMoiKhoHangComponent,
     DanhSachKhoHangComponent,
     ChiTietKhoHangComponent, 
-    ThongKeComponent, ChiTietDonHangComponent, QuanLyDonHangComponent, TaoDonNhapHangComponent, ThongTinTaiKhoanComponent, DanhSachNhomNguoiDungComponent, DanhSachSanPhamComponent, GiaoDienChungComponent, NccQuanLyDonHangComponent, NccThongTinDonHangComponent, SignInComponent, ThemSanPhamComponent,
+    ThongKeComponent, ChiTietDonHangComponent, QuanLyDonHangComponent, TaoDonNhapHangComponent, ThongTinTaiKhoanComponent, DanhSachNhomNguoiDungComponent, DanhSachSanPhamComponent, GiaoDienChungComponent, NccQuanLyDonHangComponent, NccThongTinDonHangComponent, SignInComponent, ThemSanPhamComponent, DatHangComponent, SieuThiComponent, SieuThiGiaoDienChungComponent, SieuThiQuanLyDonHangComponent, SieuThiThongTinDonHangComponent,
   ],
   imports: [
     FormsModule,
