@@ -91,6 +91,7 @@ export class DanhSachNhomNguoiDungComponent implements OnInit {
   async select(type: TabDirective) { 
     this.page = 1;
     this.users.splice(0, this.users.length);
+    this.display_users.splice(0, this.display_users.length);
     const url = "/getUserInfo";
     const headers = new Headers({ 'Content-Type': 'application/json' });
     var body;
