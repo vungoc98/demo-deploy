@@ -979,8 +979,7 @@ app.post('/createOrder', jsonParser, function(req, res) {
 	var code = "ORDER_" + rdmCode.substr(0, 6);
 	var sql = "insert into orders(code, user_id, price_total, amount_total, order_date, import_date, status) values (?,?,?,?,?,?,?)";
 	sql = mysql.format(sql, [code, req.body.user_id, req.body.price_total, req.body.amount_total, req.body.order_date, 
-		req.body.import_date, "Đã giao"]);
-	// console.log(sql);
+		req.body.import_date, "Đã giao"]); 
 	con.query(sql, function(err, results) {
 		if (err) {
 			res.send("0");
