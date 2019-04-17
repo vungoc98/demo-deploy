@@ -68,7 +68,7 @@ const routesConfig: Routes = [
   // 1.3. Quan ly don hang
   { path: 'quanlydonhang/taodonnhaphang', component: TaoDonNhapHangComponent },
   { path: 'quanlydonhang/nhap_hang_dat_hang', component: QuanLyDonHangComponent },
-  { path: 'quanlydonhang/:name/xemchitiet/:id', component: ChiTietDonHangComponent },
+  { path: 'quanlydonhang/nhap_hang_dat_hang/:name/xemchitiet/:id', component: ChiTietDonHangComponent },
   
   // 1.4. Quan ly nguoi dung
   { path: 'quanlynguoidung', component: DanhSachNhomNguoiDungComponent },  
