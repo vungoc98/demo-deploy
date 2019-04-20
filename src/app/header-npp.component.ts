@@ -28,6 +28,7 @@ export class HeaderNPPComponent implements OnInit {
     sessionStorage.clear();
   }
   openTTTK() {
+    console.log("Vao day tttk");
     this.tttk = true;
   }
 }

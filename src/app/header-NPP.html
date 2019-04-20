@@ -16,54 +16,19 @@
                 <span class="glyphicon glyphicon-align-justify" style="margin-left: 100px;"></span>
               </a>
             </div>
-        </div> 
-        <div>
-          <ul class="nav navbar-nav navbar-user navbar-right"> 
-            <li>
-              <a href="javascript:void(0);" onclick="openTTTK();">
-                <span class="glyphicon glyphicon-list-alt" aria-multiselectable="true"></span>
-                &nbsp;&nbsp; Hệ thống sản phẩm
-              </a>
-                <div *ngIf="true">
-                  <a routerLink="/hethongsanpham/taomoisanpham" class="list-group-item" routerLinkActive="active">Tạo mới</a>
-                  <nav>
-                      <a routerLink="/hethongsanpham/danhsachsanpham" class="list-group-item" routerLinkActive="active">Danh sách</a>
-                    </nav>
-                    <a routerLink="/hethongsanpham/hethongnhomsanpham" class="list-group-item" routerLinkActive="active" >Hệ thống nhóm sản phẩm</a>
-                </div> 
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-user navbar-right"> 
-            <li>
-              <a href="javascript:void(0);" onclick="openTTTK();">
-                <span class="glyphicon glyphicon-list-alt" aria-multiselectable="true"></span>
-                &nbsp;&nbsp; Hệ thống sản phẩm
-              </a>
-                <div *ngIf="true">
-                  <a routerLink="/hethongsanpham/taomoisanpham" class="list-group-item" routerLinkActive="active">Tạo mới</a>
-                  <nav>
-                      <a routerLink="/hethongsanpham/danhsachsanpham" class="list-group-item" routerLinkActive="active">Danh sách</a>
-                    </nav>
-                    <a routerLink="/hethongsanpham/hethongnhomsanpham" class="list-group-item" routerLinkActive="active" >Hệ thống nhóm sản phẩm</a>
-                </div> 
-            </li>
-          </ul>
-        </div>
+        </div>  
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-user navbar-right"> 
-            <li>
-              <a href="javascript:void(0);" onclick="openTTTK();">
-                <span class="glyphicon glyphicon-list-alt" aria-multiselectable="true"></span>
-                &nbsp;&nbsp; Hệ thống sản phẩm
-              </a>
-                  <div *ngIf="tttk">
-                    <a routerLink="/hethongsanpham/taomoisanpham" class="list-group-item" routerLinkActive="active">Tạo mới</a>
-                    <nav>
-                        <a routerLink="/hethongsanpham/danhsachsanpham" class="list-group-item" routerLinkActive="active">Danh sách</a>
-                      </nav>
-                      <a routerLink="/hethongsanpham/hethongnhomsanpham" class="list-group-item" routerLinkActive="active" >Hệ thống nhóm sản phẩm</a>
-                  </div> 
-            </li>
+             <a href id="basic-link" dropdownToggle (click)="false"
+                 aria-controls="basic-link-dropdown">Click me for a dropdown, yo!</a>
+            <ul id="basic-link-dropdown" *dropdownMenu class="dropdown-menu"
+                role="menu" aria-labelledby="basic-link">
+              <li>
+                <a class="dropdown-item" href="#">Vu</a>
+                <a class="dropdown-item" href="#">Thi</a>
+                <a class="dropdown-item" href="#">Ngoc</a>
+              </li>
+            </ul>
             <li class="dropright">
               <a href="javascript:void(0);" onclick="openTTTK();" class="dropdown-toggle" data-toggle="dropdown" role="button" style="color: white;">{{tenTk}}
                   <span class="caret"> 
