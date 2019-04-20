@@ -94,10 +94,8 @@
 
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-primary" [disabled]="formUpdateAcount.invalid">Cập nhật</button>
-							    </div>
- 
-							</form>
-						<!-- 	<code>{{ formUpdateAcount.controls.email.errors | json }}</code> -->
+							    </div> 
+							</form> 
 						</div>
 			    	</tab>
 				    <tab heading="Đổi mật khẩu">
@@ -110,8 +108,7 @@
 											<i class="glyphicon glyphicon-lock"></i> 
 										</span>
 										<input pattern="\w*" minlength="6" type="password" class="form-control" required="" formControlName="oldPassword" required="">
-									</div>
-									<!-- <p *ngIf="formChangePassword.get('oldPassword').invalid && formChangePassword.get('oldPassword').touched" style="color: red;">Password invalid</p> -->
+									</div> 
 								</div>
 									 
 								<div class="form-group">
@@ -121,8 +118,7 @@
 											<i class="glyphicon glyphicon-lock"></i>
 										</span>
 										<input pattern="\w*" minlength="6" type="password" class="form-control" formControlName="newPassword" required="">
-									</div>
-									<!-- <p *ngIf="formChangePassword.get('newPassword').invalid && formChangePassword.get('newPassword').touched" style="color: red;">Password invalid</p> -->
+									</div> 
 								</div>
 							 
 								<div class="form-group">
@@ -132,8 +128,7 @@
 											<i class="glyphicon glyphicon-lock"></i>
 										</span>
 										<input pattern="\w*" minlength="6" type="password" class="form-control" formControlName="againPassword" required="">
-									</div>
-									<!-- <p *ngIf="formChangePassword.get('againPassword').invalid && formChangePassword.get('againPassword').touched" style="color: red;">Password invalid</p> -->
+									</div> 
 								</div>
 								
 								<div class="modal-footer">
