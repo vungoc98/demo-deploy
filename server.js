@@ -46,7 +46,9 @@ app.post('/login', jsonParser, (req, res) => {
 	sql = mysql.format(sql, [req.body.name, req.body.password]);
 	 
 	con.query(sql, function(err, results) {
-		if (err) throw err; 
+		if (err) {
+			this.login = new Login(check = 0);
+		}
 		if (results.length == 0) {
 			this.login = new Login(check = 0);
 		}
