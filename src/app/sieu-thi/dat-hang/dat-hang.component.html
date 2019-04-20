@@ -11,7 +11,7 @@
 				</ol>		 
 			</div>   
 			<div>
-				<form>
+				<form [formGroup]="formCreateOrder" (ngSubmit)="createOrder(formCreateOrder);">
 					<div class="row">
 						<div class="col-sm-5">
 							<h4 style="color: red;"><b>Danh sách hàng hóa</b></h4>
@@ -21,7 +21,7 @@
 							<ng-template #template>
 							 
 								<div class="modal-header">
-									<h3 class="modal-title pull-left">Danh sách hàng hóa</h3>
+									<h3 class="modal-title pull-left">Danh sách hàng hóa của nhà cung cấp</h3>
 								    <button type="button" class="close pull-right" (click)="checkbox();">
 								    	<span>&times;</span>
 								    </button>
@@ -115,42 +115,42 @@
 								<td>{{product.description}}</td>
 								<td><img src="assets/images/{{product.image}}" style="width: 50px; height: 50px;"></td>
 								<td>
-									<input type="text" name="" [(ngModel)]="product.amount" [ngModelOptions]="{standalone: true}" (change)="changeListner($event)">
+									<input type="text" [(ngModel)]="product.amount" (change)="changeListner($event, product.id)" pattern="[0-9]*" required="" [ngModelOptions]="{standalone: true}">
+									<p *ngIf="product.checkAmount" style="color: red;">Vui lòng điền số lượng sản phẩm</p>
+									<p *ngIf="!(product.amount > 0) && product.amount != 0;" style="color: red;">Số lượng sản phẩm không hợp lệ</p> 
 								</td>
 								<td>
 									<input type="text" name="" value="{{product.price * product.amount}}" disabled="">
 								</td>
 							</tr>
 						</tbody>
-					</table>
-					<form [formGroup]="formCreateOrder" (ngSubmit)="createOrder(formCreateOrder);">
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label>Tổng số lượng:</label>
-									<div class="input-group">
-										<span class="input-group-addon">
-											<i class="glyphicon glyphicon-usd"></i>
-										</span>
-										<input disabled="" class="form-control" type="text" name="" value="{{total_amount}}" formControlName="total_amount">
-									</div>
+					</table> 
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label>Tổng số lượng:</label>
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="glyphicon glyphicon-usd"></i>
+									</span>
+									<input disabled="" class="form-control" type="text" name="" value="{{total_amount}}" formControlName="total_amount">
 								</div>
 							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label>Tổng tiền:</label>
-									<div class="input-group">
-										<span class="input-group-addon">
-											<i class="glyphicon glyphicon-usd"></i>
-										</span>
-										<input disabled="" class="form-control" type="text" name="" value="{{total_price}}" formControlName="total_price">
-									</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label>Tổng tiền:</label>
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="glyphicon glyphicon-usd"></i>
+									</span>
+									<input disabled="" class="form-control" type="text" name="" value="{{total_price}}" formControlName="total_price">
 								</div>
 							</div>
-						</div> 
-						<br><br>
-						<button type="submit" class="btn btn-primary">Tạo đơn hàng</button>
-					</form>
+						</div>
+					</div> 
+					<br><br>
+					<button type="submit" class="btn btn-primary" [disabled]="formCreateOrder.invalid">Tạo đơn hàng</button> 
 				</form>
 			</div>
 		</div>

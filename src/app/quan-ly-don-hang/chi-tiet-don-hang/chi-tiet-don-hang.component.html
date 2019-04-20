@@ -65,8 +65,8 @@
 						<br *ngIf="donDatHang">
 						<br *ngIf="donDatHang">
 						<div *ngIf="donDatHang"> 
-							<button type="button" class="btn btn-primary" (click)="xacNhanDonHang();" style="margin-left: 35px;" *ngIf="status == 'Chờ xác nhận' && type_account == 'npp'">Xác nhận</button>
-							<button type="button" class="btn btn-primary" (click)="xacNhanDonHang();" style="margin-left: 35px;" *ngIf="status == 'Chờ thanh toán' && type_account == 'sieuthi'">Thanh toán</button>
+							<button type="button" class="btn btn-primary" (click)="xacNhanDonHang();" style="margin-left: 30px;" *ngIf="status == 'Chờ xác nhận' && type_account == 'npp'">Xác nhận</button>
+							<button type="button" class="btn btn-primary" (click)="xacNhanDonHang();" style="margin-left: 30px;" *ngIf="status == 'Chờ thanh toán' && type_account == 'sieuthi'">Thanh toán</button>
 							<button type="button" class="btn btn-primary" style="margin-left: 35px;" *ngIf="status == 'Đã thanh toán' && type_account == 'npp'" (click)="openModalXuatHang(xuathang)">Xuất hàng</button> 
 							<ng-template #xuathang style="width: 1000px;">
 								<div class="modal-header">
@@ -107,12 +107,13 @@
 							  	 
 							  	<div class="modal-footer">
 							  		<button class="btn btn-default" (click)="closeModal();">Close</button>
-							  	</div>
-							 
+							  	</div> 
 							</ng-template>
-							<button class="btn btn-danger" (click)="openModalHuyDonHang(huydon);" style="margin-left: 40px;" *ngIf="status != 'Đã giao' && status != 'Bị hủy'">Hủy đơn hàng</button>
-							<ng-template #huydon>
-							 
+
+							<button class="btn btn-danger" (click)="openModalHuyDonHang(huydon);" style="float: left;" *ngIf="status != 'Đã giao' && status != 'Bị hủy'">Hủy đơn hàng</button>
+							<br>
+
+							<ng-template #huydon> 
 								<div class="modal-header">
 									<h3 class="modal-title pull-left">Lý do hủy đơn hàng</h3>
 								    <button type="button" class="close pull-right" (click)="closeModal();">
@@ -131,8 +132,7 @@
 							  	<div class="modal-footer">
 							  		<button class="btn btn-primary" (click)="huyDon();" [disabled]="reason.trim() == ''">Hủy đơn</button>
 							  		<button class="btn btn-default" (click)="closeModal();">Close</button>
-							  	</div>
-							 
+							  	</div> 
 							</ng-template>
 						</div>
 					</div>
@@ -154,7 +154,7 @@
 						<br>
 						<label>Email nhà cung cấp: <span>{{email}}</span></label>
 						 
-					</div>
+					</div> 
 					<div *ngIf="donDatHang">
 						 <h4><b>THÔNG TIN SIÊU THỊ</b></h4>
 						<hr>

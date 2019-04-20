@@ -57,13 +57,13 @@ export class LoginComponent implements OnInit {
         this.info = new Login(resJson.check, resJson.username, resJson.password, resJson.name, resJson.address, resJson.email, resJson.mobile, resJson.count_type);
         this.acountInfo.setInfomation(this.info); 
         if (this.thongTinTaiKhoan.acount_type == "Nhà phân phối") {  
-          window.location.replace("/nhaphanphoi");
+          this.router.navigate(['/nhaphanphoi']); 
         }
         else if (this.thongTinTaiKhoan.acount_type == "Nhà cung cấp") {
-          window.location.replace("/nhacungcap");
+          this.router.navigateByUrl("/nhacungcap");
         }
         else if (this.thongTinTaiKhoan.acount_type == "Siêu thị") {
-          window.location.replace("/sieuthi");
+          this.router.navigateByUrl("/sieuthi");
         }
       }
         

@@ -33,19 +33,16 @@ export class DatHangComponent implements OnInit {
   constructor(private route: ActivatedRoute, private modalService: BsModalService, private fb: FormBuilder, private router: Router, private http: Http) { }
 
   async ngOnInit() {
-  	this.formSearch = this.fb.group({
-  		name: '',
-  		code: ''
-  	});
+    this.formSearch = this.fb.group({
+      name: '',
+      code: ''
+    });
 
     // Form tao thong tin don nhap hang
     this.formCreateOrder = this.fb.group({
       total_amount: '',
-      total_price: '',
-      ngay_tao: '',
-      ngay_du_kien: ''
+      total_price: '',  
     });
-
 
     // Kiem tra trang thai logout
     var username = sessionStorage.getItem('username'); 
@@ -82,6 +79,7 @@ export class DatHangComponent implements OnInit {
     for (var i = 0; i < this.products.length; i++) {
       this.products[i].checked = false;
       this.products[i].amount = 0;
+      this.products[i].checkAmount = false;
     } 
 
     // Kiem tra so luong products co du lon de hien thi trang
@@ -195,7 +193,9 @@ export class DatHangComponent implements OnInit {
   }
 
   // Truong hop thay doi trong input
-  changeListner($event) { 
+  changeListner($event, id) { 
+    var product = this.products_order.find(product => product.id == id);
+    product.checkAmount = false;
     this.total();
   }
 
@@ -227,6 +227,7 @@ export class DatHangComponent implements OnInit {
       else {
         this.products[i].amount = 0;
         this.products[i].prices = 0;
+        this.products[i].checkAmount = false;
       }
     } 
     this.total();
@@ -252,22 +253,31 @@ export class DatHangComponent implements OnInit {
   }
 
   // Lay thong tin don nhap hang va gui len server
-  createOrder(formCreateOrder) {     
-    const url = "/createOrder-SieuThi";
-    const headers = new Headers( {'Content-Type': 'application/json'});
-    const body = JSON.stringify({'username': sessionStorage.getItem('username'), 'price_total': this.total_price,  
-      'products': this.products_order, 'amount_total': this.total_amount});
-    this.http.post(url, body, { headers: headers })
-    .toPromise()
-    .then(res => res.json())
-    .then(resJson => {
-      // Them don hang thanh cong
-      if (resJson == "1") {
-        this.router.navigateByUrl('/sieuthi/quanlydonhang');
-      }
-      else {
-        alert("Error!");
-      }
-    })
-  }
-} 
+  createOrder(formCreateOrder) {   
+    var i, j = 0;  
+    for (i = 0; i < this.products_order.length; i++) {
+      if(this.products_order[i].amount == 0) {
+        this.products_order[i].checkAmount = true; 
+        j++;
+      } 
+    }
+    if (j == 0) {
+      const url = "/createOrder-SieuThi";
+      const headers = new Headers( {'Content-Type': 'application/json'});
+      const body = JSON.stringify({'username': sessionStorage.getItem('username'), 'price_total': this.total_price,  
+        'products': this.products_order, 'amount_total': this.total_amount});
+      this.http.post(url, body, { headers: headers })
+      .toPromise()
+      .then(res => res.json())
+      .then(resJson => {
+        // Them don hang thanh cong
+        if (resJson == "1") {
+          this.router.navigateByUrl('/sieuthi/quanlydonhang');
+        }
+        else {
+          alert("Error!");
+        }
+      })
+    } 
+  } 
+}  
