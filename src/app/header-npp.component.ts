@@ -15,7 +15,7 @@ export class HeaderNPPComponent implements OnInit {
   tenTk; // luu ten tai khoan cua nguoi dung
   information: Login; // thong tin ban dau cua nguoi dung khi login
   info: Login; // Lay lai thong tin cua nguoi dung khi ho reload lai page
-  tttk: boolean;
+  tttk: boolean = false;
   constructor(private router: Router, private loginService: LoginService, private acountInfo: AcountInfoService, private http: Http) { 
   }
 
