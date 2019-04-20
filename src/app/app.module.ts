@@ -1,4 +1,4 @@
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {LocationStrategy, HashLocationStrategy, PathLocationStrategy} from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -95,7 +95,7 @@ const routesConfig: Routes = [
   { path: 'sieuthi/quanlydonhang', component: SieuThiQuanLyDonHangComponent},
   { path: 'sieuthi/quanlydonhang/xemchitiet/:id', component: SieuThiThongTinDonHangComponent },
 
-  { path: "**", redirectTo: '/login', pathMatch: 'full' }
+  { path: "**", redirectTo: '', pathMatch: 'full' }
 ]
 
 @NgModule({
@@ -128,7 +128,7 @@ const routesConfig: Routes = [
     BsDatepickerModule.forRoot(),
     TabsModule.forRoot()
   ],
-  providers: [AcountInfoService,{provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [AcountInfoService,{provide: LocationStrategy, useClass: PathLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
