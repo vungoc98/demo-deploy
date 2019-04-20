@@ -52,12 +52,10 @@ export class NhaPhanPhoiComponent implements OnInit {
 
     // Kiem tra trang thai logout
     var username = sessionStorage.getItem('username'); 
-    if (typeof username == undefined) { 
+    if (username == undefined) { 
       this.router.navigateByUrl("", {skipLocationChange: true});  
-    } 
-    
-  } 
-   
+    }  
+  }  
 }
 
 class AcountInfo {
