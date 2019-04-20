@@ -17,7 +17,21 @@
               </a>
             </div>
         </div>   
-        <div id="navbar" class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse">
+          <ul> 
+                <span dropdown>
+        <a href id="basic-link" dropdownToggle (click)="false"
+                 aria-controls="basic-link-dropdown" style="color: white;">Click me for a dropdown, yo!</a>
+            <ul id="basic-link-dropdown" *dropdownMenu class="dropdown-menu"
+                role="menu" aria-labelledby="basic-link">
+              <li>
+                <a class="dropdown-item" href="#">Vu</a>
+                <a class="dropdown-item" href="#">Thi</a>
+                <a class="dropdown-item" href="#">Ngoc</a>
+              </li>
+            </ul>
+          </span>
+        </ul>
           <ul class="nav navbar-nav navbar-user navbar-right"> 
                 <span dropdown>
         <a href id="basic-link" dropdownToggle (click)="false"
@@ -45,20 +59,7 @@
 
         </div> 
       </div>
-       <ul> 
-                <span dropdown>
-        <a href id="basic-link" dropdownToggle (click)="false"
-                 aria-controls="basic-link-dropdown" style="color: white;">Click me for a dropdown, yo!</a>
-            <ul id="basic-link-dropdown" *dropdownMenu class="dropdown-menu"
-                role="menu" aria-labelledby="basic-link">
-              <li>
-                <a class="dropdown-item" href="#">Vu</a>
-                <a class="dropdown-item" href="#">Thi</a>
-                <a class="dropdown-item" href="#">Ngoc</a>
-              </li>
-            </ul>
-          </span>
-        </ul>
+        
 </nav>
 <br>
 <br> 
