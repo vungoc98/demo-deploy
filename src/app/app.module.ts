@@ -95,7 +95,7 @@ const routesConfig: Routes = [
   { path: 'sieuthi/quanlydonhang', component: SieuThiQuanLyDonHangComponent},
   { path: 'sieuthi/quanlydonhang/xemchitiet/:id', component: SieuThiThongTinDonHangComponent },
 
-  { path: '*', component: LoginComponent}
+  { path: "**", redirectTo: '/login', pathMatch: 'full' }
 ]
 
 @NgModule({
